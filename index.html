@@ -5,27 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pallet Network Walkthrough</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --blue: #1a56db;
-    --blue-light: #3b82f6;
-    --blue-glow: #60a5fa;
-    --dark: #0f172a;
-    --dark2: #1e293b;
-    --gray: #94a3b8;
-    --light: #f1f5f9;
+    --green: #00E85B;
+    --green-secondary: #24D269;
+    --navy: #1C2C31;
+    --navy-90: #304045;
+    --navy-70: #606B6F;
+    --navy-10: #D4E1E5;
+    --mint: #EBFFF5;
+    --offwhite: #FEFEFE;
+    --light-grey: #EBF2EF;
+    --light-green: #F4FBF7;
+    --dark-grey: #BBC0C1;
     --white: #ffffff;
-    --green: #22c55e;
-    --amber: #f59e0b;
-    --red: #ef4444;
+    --amber: #FCB220;
+    --red: #FF5E7A;
+    --iso-green-1: #64F87D;
+    --iso-green-2: #36BB6B;
   }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
     color: var(--white);
     overflow: hidden;
     height: 100vh;
@@ -35,28 +40,28 @@
   /* ‚îÄ‚îÄ Progress bar ‚îÄ‚îÄ */
   #progress-bar {
     position: fixed; top: 0; left: 0; height: 4px;
-    background: linear-gradient(90deg, var(--blue), var(--blue-glow));
+    background: linear-gradient(90deg, var(--green), var(--iso-green-1));
     z-index: 1000; transition: width 0.6s ease;
-    box-shadow: 0 0 12px rgba(59,130,246,0.5);
+    box-shadow: 0 0 12px rgba(0,232,91,0.4);
   }
 
   /* ‚îÄ‚îÄ Controls ‚îÄ‚îÄ */
   #controls {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
     display: flex; align-items: center; gap: 16px; z-index: 999;
-    background: rgba(15,23,42,0.85); backdrop-filter: blur(12px);
+    background: rgba(28,44,49,0.9); backdrop-filter: blur(12px);
     padding: 10px 24px; border-radius: 40px;
     border: 1px solid rgba(255,255,255,0.08);
   }
   #controls button {
-    background: none; border: none; color: var(--gray); cursor: pointer;
+    background: none; border: none; color: var(--navy-70); cursor: pointer;
     font-size: 18px; padding: 6px 10px; border-radius: 8px;
     transition: all 0.2s;
   }
   #controls button:hover { color: var(--white); background: rgba(255,255,255,0.08); }
-  #controls button.active { color: var(--blue-light); }
+  #controls button.active { color: var(--green); }
   #slide-counter {
-    color: var(--gray); font-size: 13px; font-weight: 500;
+    color: var(--dark-grey); font-size: 13px; font-weight: 500;
     min-width: 60px; text-align: center;
   }
 
@@ -96,39 +101,45 @@
 
   /* ‚îÄ‚îÄ Typography ‚îÄ‚îÄ */
   .hero-title {
-    font-size: 64px; font-weight: 900; line-height: 1.1;
-    background: linear-gradient(135deg, var(--white), var(--blue-glow));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-size: 64px; font-weight: 700; line-height: 1.1;
+    color: var(--white);
     margin-bottom: 20px;
   }
+  .hero-title .accent { color: var(--green); }
   .section-label {
     font-size: 13px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 3px; color: var(--blue-light); margin-bottom: 16px;
+    letter-spacing: 3px; color: var(--green); margin-bottom: 16px;
   }
   .section-title {
-    font-size: 48px; font-weight: 800; line-height: 1.15;
+    font-size: 48px; font-weight: 700; line-height: 1.15;
     color: var(--white); margin-bottom: 20px;
   }
   .section-subtitle {
-    font-size: 22px; font-weight: 400; color: var(--gray);
+    font-size: 22px; font-weight: 400; color: var(--dark-grey);
     line-height: 1.6; max-width: 700px; margin: 0 auto;
   }
   .body-text {
-    font-size: 20px; font-weight: 400; color: var(--gray);
+    font-size: 20px; font-weight: 400; color: var(--dark-grey);
     line-height: 1.7; max-width: 720px; margin: 0 auto;
   }
   .big-number {
-    font-size: 80px; font-weight: 900; color: var(--blue-light);
+    font-size: 80px; font-weight: 700; color: var(--green);
     line-height: 1;
   }
   .big-label {
-    font-size: 18px; font-weight: 500; color: var(--gray);
+    font-size: 18px; font-weight: 500; color: var(--dark-grey);
     margin-top: 8px;
   }
-  .highlight { color: var(--blue-glow); font-weight: 600; }
+  .highlight { color: var(--green); font-weight: 600; }
   .highlight-green { color: var(--green); font-weight: 600; }
   .highlight-amber { color: var(--amber); font-weight: 600; }
   .highlight-red { color: var(--red); font-weight: 600; }
+
+  /* ‚îÄ‚îÄ Chevron brand element ‚îÄ‚îÄ */
+  .chevron-divider {
+    display: inline-block; margin: 0 8px; color: var(--green);
+    font-size: 1.2em; opacity: 0.6;
+  }
 
   /* ‚îÄ‚îÄ Stat cards ‚îÄ‚îÄ */
   .stats-row {
@@ -136,8 +147,8 @@
     margin-top: 32px; flex-wrap: wrap;
   }
   .stat-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,232,91,0.04);
+    border: 1px solid rgba(0,232,91,0.12);
     border-radius: 16px; padding: 28px 36px;
     min-width: 180px; text-align: center;
   }
@@ -151,24 +162,24 @@
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 100px; height: 100px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    background: linear-gradient(135deg, var(--green), var(--iso-green-2));
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 20px; color: var(--white);
-    box-shadow: 0 0 40px rgba(59,130,246,0.4);
+    font-weight: 700; font-size: 20px; color: var(--navy);
+    box-shadow: 0 0 40px rgba(0,232,91,0.3);
     z-index: 2;
   }
   .spoke-node {
     position: absolute; width: 80px; height: 80px; border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(255,255,255,0.12);
+    background: rgba(0,232,91,0.06);
+    border: 2px solid rgba(0,232,91,0.18);
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 600; color: var(--gray);
+    font-size: 12px; font-weight: 600; color: var(--dark-grey);
     text-align: center; line-height: 1.2;
     z-index: 2;
   }
   .spoke-line {
     position: absolute; top: 50%; left: 50%;
-    height: 2px; background: rgba(59,130,246,0.25);
+    height: 2px; background: rgba(0,232,91,0.2);
     transform-origin: left center; z-index: 1;
   }
   .slide.active .spoke-node { animation: fadeInNode 0.6s ease forwards; opacity: 0; }
@@ -182,13 +193,13 @@
     margin-top: 30px; flex-wrap: wrap;
   }
   .step-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,232,91,0.04);
+    border: 1px solid rgba(0,232,91,0.12);
     border-radius: 14px; padding: 20px 16px;
     width: 160px; text-align: center;
   }
   .step-num {
-    font-size: 28px; font-weight: 800; color: var(--blue-light);
+    font-size: 28px; font-weight: 700; color: var(--green);
     margin-bottom: 6px;
   }
   .step-label {
@@ -196,7 +207,7 @@
     margin-bottom: 4px;
   }
   .step-desc {
-    font-size: 11px; color: var(--gray); line-height: 1.4;
+    font-size: 11px; color: var(--dark-grey); line-height: 1.4;
   }
 
   /* ‚îÄ‚îÄ Comparison ‚îÄ‚îÄ */
@@ -207,12 +218,12 @@
     border-radius: 16px; padding: 32px; width: 340px; text-align: left;
   }
   .compare-card.bad {
-    background: rgba(239,68,68,0.08);
-    border: 1px solid rgba(239,68,68,0.2);
+    background: rgba(255,94,122,0.06);
+    border: 1px solid rgba(255,94,122,0.18);
   }
   .compare-card.good {
-    background: rgba(34,197,94,0.08);
-    border: 1px solid rgba(34,197,94,0.2);
+    background: rgba(0,232,91,0.06);
+    border: 1px solid rgba(0,232,91,0.18);
   }
   .compare-title {
     font-size: 18px; font-weight: 700; margin-bottom: 16px;
@@ -223,7 +234,7 @@
     font-size: 15px;
   }
   .compare-row-item:last-child { border-bottom: none; }
-  .compare-label { color: var(--gray); }
+  .compare-label { color: var(--dark-grey); }
   .compare-value { font-weight: 600; }
 
   /* ‚îÄ‚îÄ Network logos ‚îÄ‚îÄ */
@@ -232,15 +243,15 @@
     gap: 16px; margin-top: 28px; max-width: 720px; margin-left: auto; margin-right: auto;
   }
   .network-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,232,91,0.04);
+    border: 1px solid rgba(0,232,91,0.10);
     border-radius: 12px; padding: 18px; text-align: left;
   }
   .network-name {
     font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px;
   }
   .network-detail {
-    font-size: 12px; color: var(--gray); line-height: 1.4;
+    font-size: 12px; color: var(--dark-grey); line-height: 1.4;
   }
 
   /* ‚îÄ‚îÄ Capability table ‚îÄ‚îÄ */
@@ -249,13 +260,13 @@
     gap: 16px; margin-top: 28px; max-width: 780px; margin-left: auto; margin-right: auto;
   }
   .cap-card {
-    background: rgba(59,130,246,0.06);
-    border: 1px solid rgba(59,130,246,0.15);
+    background: rgba(0,232,91,0.05);
+    border: 1px solid rgba(0,232,91,0.12);
     border-radius: 14px; padding: 22px; text-align: left;
   }
   .cap-icon { font-size: 28px; margin-bottom: 8px; }
   .cap-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
-  .cap-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .cap-desc { font-size: 12px; color: var(--dark-grey); line-height: 1.5; }
 
   /* ‚îÄ‚îÄ Glossary ‚îÄ‚îÄ */
   .glossary-grid {
@@ -264,60 +275,107 @@
     text-align: left;
   }
   .glossary-item {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,232,91,0.03);
+    border: 1px solid rgba(0,232,91,0.08);
     border-radius: 10px; padding: 14px 18px;
   }
-  .glossary-term { font-size: 14px; font-weight: 700; color: var(--blue-glow); }
-  .glossary-def { font-size: 12px; color: var(--gray); margin-top: 2px; line-height: 1.4; }
+  .glossary-term { font-size: 14px; font-weight: 700; color: var(--green); }
+  .glossary-def { font-size: 12px; color: var(--dark-grey); margin-top: 2px; line-height: 1.4; }
 
-  /* ‚îÄ‚îÄ Emoji badge ‚îÄ‚îÄ */
+  /* ‚îÄ‚îÄ Icon badge ‚îÄ‚îÄ */
   .emoji-badge {
     display: inline-flex; align-items: center; justify-content: center;
     width: 56px; height: 56px; border-radius: 14px;
-    background: rgba(59,130,246,0.12); font-size: 28px;
+    background: rgba(0,232,91,0.1); font-size: 28px;
     margin-bottom: 14px;
   }
 
   /* ‚îÄ‚îÄ Pulse animation for hub ‚îÄ‚îÄ */
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 40px rgba(59,130,246,0.4); }
-    50% { box-shadow: 0 0 60px rgba(59,130,246,0.7); }
+    0%, 100% { box-shadow: 0 0 40px rgba(0,232,91,0.3); }
+    50% { box-shadow: 0 0 60px rgba(0,232,91,0.5); }
   }
   .hub-center { animation: pulse 2.5s ease-in-out infinite; }
 
-  /* ‚îÄ‚îÄ Background particles ‚îÄ‚îÄ */
+  /* ‚îÄ‚îÄ Background decorative elements ‚îÄ‚îÄ */
   .bg-glow {
-    position: fixed; border-radius: 50%; filter: blur(100px);
+    position: fixed; border-radius: 50%; filter: blur(120px);
     pointer-events: none; z-index: -1;
   }
-  .bg-glow.g1 { width: 600px; height: 600px; background: rgba(26,86,219,0.08); top: -200px; right: -200px; }
-  .bg-glow.g2 { width: 500px; height: 500px; background: rgba(59,130,246,0.06); bottom: -150px; left: -150px; }
+  .bg-glow.g1 { width: 600px; height: 600px; background: rgba(0,232,91,0.05); top: -200px; right: -200px; }
+  .bg-glow.g2 { width: 500px; height: 500px; background: rgba(0,232,91,0.03); bottom: -150px; left: -150px; }
+
+  /* ‚îÄ‚îÄ Chevron background pattern ‚îÄ‚îÄ */
+  .bg-chevron {
+    position: fixed;
+    bottom: -80px;
+    right: -80px;
+    width: 400px;
+    height: 400px;
+    opacity: 0.03;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .bg-chevron svg { width: 100%; height: 100%; }
+
+  /* ‚îÄ‚îÄ Qargo badge ‚îÄ‚îÄ */
+  .qargo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--green), var(--iso-green-2));
+    padding: 10px 28px; border-radius: 30px;
+    font-weight: 600; font-size: 14px;
+    color: var(--navy);
+  }
+
+  /* ‚îÄ‚îÄ Highlight callout ‚îÄ‚îÄ */
+  .callout-green {
+    background: rgba(0,232,91,0.08);
+    border: 1px solid rgba(0,232,91,0.2);
+    border-radius: 12px;
+    padding: 14px 24px;
+    display: inline-block;
+  }
+  .callout-green span {
+    font-size: 15px; color: var(--green); font-weight: 600;
+  }
 </style>
 </head>
 <body>
 
 <div class="bg-glow g1"></div>
 <div class="bg-glow g2"></div>
+<!-- Decorative chevron -->
+<div class="bg-chevron">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 180L100 100L40 20" stroke="#00E85B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M100 180L160 100L100 20" stroke="#00E85B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
 <div id="progress-bar" style="width: 0%"></div>
 
 <div id="slideshow">
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 1: Title ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 1: Title -->
   <div class="slide active" data-duration="5000">
     <div class="slide-inner">
       <div class="reveal" style="margin-bottom: 20px;">
-        <span style="font-size:56px;">üì¶</span>
+        <!-- Qargo-style isometric box icon -->
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 4L56 18V46L32 60L8 46V18L32 4Z" fill="rgba(0,232,91,0.15)" stroke="#00E85B" stroke-width="2"/>
+          <path d="M32 4L56 18L32 32L8 18L32 4Z" fill="rgba(0,232,91,0.25)"/>
+          <path d="M32 32V60" stroke="#00E85B" stroke-width="2"/>
+          <path d="M32 32L56 18" stroke="#00E85B" stroke-width="2" opacity="0.5"/>
+        </svg>
       </div>
-      <div class="hero-title reveal d1">Pallet Network<br>Walkthrough</div>
+      <div class="hero-title reveal d1">Pallet Network<br><span class="accent">Walkthrough</span></div>
       <div class="section-subtitle reveal d2">An introduction to pallet networks for new team members</div>
       <div class="reveal d3" style="margin-top: 36px;">
-        <span style="display:inline-block; background:linear-gradient(135deg, var(--blue), var(--blue-light)); padding:10px 28px; border-radius:30px; font-weight:600; font-size:14px;">Qargo Academy</span>
+        <span class="qargo-badge">Qargo Academy</span>
       </div>
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 2: The Problem ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 2: The Problem -->
   <div class="slide" data-duration="6000">
     <div class="slide-inner">
       <div class="section-label reveal">The Problem</div>
@@ -326,7 +384,7 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 3: Stats ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 3: Stats -->
   <div class="slide" data-duration="6000">
     <div class="slide-inner">
       <div class="section-label reveal">The Waste</div>
@@ -348,7 +406,7 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 4: What is a Pallet Network? ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 4: What is a Pallet Network? -->
   <div class="slide" data-duration="7000">
     <div class="slide-inner">
       <div class="section-label reveal">Definition</div>
@@ -356,27 +414,30 @@
       <div class="body-text reveal d2">A <span class="highlight">shared delivery system</span> for palletised freight. Independent hauliers share trailer space through a central hub-and-spoke network ‚Äî so nobody sends a truck half-empty.</div>
       <div class="stats-row reveal d3">
         <div class="stat-card">
-          <div style="font-size:36px; margin-bottom:8px;">ü§ù</div>
+          <div style="font-size:36px; margin-bottom:8px;">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M10 18L16 24L26 12" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
           <div style="font-size:15px; font-weight:700; color:var(--white); margin-bottom:4px;">Cooperative Model</div>
-          <div style="font-size:13px; color:var(--gray);">Dozens of independent hauliers join as members</div>
+          <div style="font-size:13px; color:var(--dark-grey);">Dozens of independent hauliers join as members</div>
         </div>
         <div class="stat-card">
-          <div style="font-size:36px; margin-bottom:8px;">üèóÔ∏è</div>
+          <div style="font-size:36px; margin-bottom:8px;">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M12 18H24M18 12V24" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
           <div style="font-size:15px; font-weight:700; color:var(--white); margin-bottom:4px;">Central Hub</div>
-          <div style="font-size:13px; color:var(--gray);">Pallets sorted & redistributed each night</div>
+          <div style="font-size:13px; color:var(--dark-grey);">Pallets sorted & redistributed each night</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 5: Hub & Spoke ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 5: Hub & Spoke -->
   <div class="slide" data-duration="7000">
     <div class="slide-inner">
       <div class="section-label reveal">Architecture</div>
       <div class="section-title reveal d1" style="font-size:36px; margin-bottom: 24px;">The Hub-and-Spoke Model</div>
       <div class="hub-container reveal d2">
         <div class="hub-center">HUB</div>
-        <!-- Spokes positioned around -->
         <div class="spoke-node" style="top:0; left:50%; transform:translateX(-50%); animation-delay:0.3s;">Scotland</div>
         <div class="spoke-node" style="top:15%; right:5%; animation-delay:0.5s;">North<br>East</div>
         <div class="spoke-node" style="top:50%; right:-5%; transform:translateY(-50%); animation-delay:0.7s;">East</div>
@@ -389,7 +450,7 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 6: Journey ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 6: Journey -->
   <div class="slide" data-duration="8000">
     <div class="slide-inner">
       <div class="section-label reveal">The Journey</div>
@@ -422,27 +483,27 @@
         </div>
       </div>
       <div class="reveal d5" style="margin-top: 28px;">
-        <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:12px; padding:14px 24px; display:inline-block;">
-          <span style="font-size:15px; color:var(--blue-glow); font-weight:600;">This entire cycle happens within 24 hours</span>
+        <div class="callout-green">
+          <span>This entire cycle happens within 24 hours</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 7: Comparison ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 7: Comparison -->
   <div class="slide" data-duration="7000">
     <div class="slide-inner">
       <div class="section-label reveal">The Power of Consolidation</div>
       <div class="section-title reveal d1" style="font-size:36px;">Why It Works</div>
       <div class="compare-row">
         <div class="compare-card bad reveal d2">
-          <div class="compare-title" style="color:var(--red);">‚ùå Without Network</div>
+          <div class="compare-title" style="color:var(--red);">Without Network</div>
           <div class="compare-row-item"><span class="compare-label">Truck utilisation</span><span class="compare-value highlight-red">~15%</span></div>
           <div class="compare-row-item"><span class="compare-label">Cost per pallet</span><span class="compare-value highlight-red">¬£200‚Äì¬£400</span></div>
           <div class="compare-row-item"><span class="compare-label">Geographic reach</span><span class="compare-value highlight-red">Local only</span></div>
         </div>
         <div class="compare-card good reveal d3">
-          <div class="compare-title" style="color:var(--green);">‚úÖ With Network</div>
+          <div class="compare-title" style="color:var(--green);">With Network</div>
           <div class="compare-row-item"><span class="compare-label">Truck utilisation</span><span class="compare-value highlight-green">85‚Äì95%</span></div>
           <div class="compare-row-item"><span class="compare-label">Cost per pallet</span><span class="compare-value highlight-green">¬£20‚Äì¬£60</span></div>
           <div class="compare-row-item"><span class="compare-label">Geographic reach</span><span class="compare-value highlight-green">Nationwide</span></div>
@@ -451,82 +512,46 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 8: Who's Involved ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 8: Who's Involved -->
   <div class="slide" data-duration="7000">
     <div class="slide-inner">
       <div class="section-label reveal">Key Players</div>
       <div class="section-title reveal d1" style="font-size:38px;">Who's Involved?</div>
       <div class="stats-row">
         <div class="stat-card reveal d2" style="width:260px; text-align:left;">
-          <div style="font-size:28px; margin-bottom:8px;">üè¢</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="20" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M8 6V4a4 4 0 018 0v2" stroke="#00E85B" stroke-width="2"/></svg>
+          </div>
           <div style="font-size:16px; font-weight:700; color:var(--white); margin-bottom:6px;">Network Operator</div>
-          <div style="font-size:13px; color:var(--gray); line-height:1.5;">Runs the hub, sets standards, manages IT, handles billing. e.g. Palletways, Pall-Ex, Palletline.</div>
+          <div style="font-size:13px; color:var(--dark-grey); line-height:1.5;">Runs the hub, sets standards, manages IT, handles billing. e.g. Palletways, Pall-Ex, Palletline.</div>
         </div>
         <div class="stat-card reveal d3" style="width:260px; text-align:left;">
-          <div style="font-size:28px; margin-bottom:8px;">üöõ</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="10" width="18" height="14" rx="2" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><circle cx="8" cy="24" r="2.5" stroke="#00E85B" stroke-width="2"/><circle cx="16" cy="24" r="2.5" stroke="#00E85B" stroke-width="2"/><path d="M20 16h4a2 2 0 012 2v4h-6" stroke="#00E85B" stroke-width="2"/></svg>
+          </div>
           <div style="font-size:16px; font-weight:700; color:var(--white); margin-bottom:6px;">Member Hauliers</div>
-          <div style="font-size:13px; color:var(--gray); line-height:1.5;">Independent companies covering local postcodes. They collect, trunk, and deliver. Boots on the ground.</div>
+          <div style="font-size:13px; color:var(--dark-grey); line-height:1.5;">Independent companies covering local postcodes. They collect, trunk, and deliver. Boots on the ground.</div>
         </div>
         <div class="stat-card reveal d4" style="width:260px; text-align:left;">
-          <div style="font-size:28px; margin-bottom:8px;">üì¶</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4L24 10V22L14 28L4 22V10L14 4Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/></svg>
+          </div>
           <div style="font-size:16px; font-weight:700; color:var(--white); margin-bottom:6px;">Shippers / Customers</div>
-          <div style="font-size:13px; color:var(--gray); line-height:1.5;">Businesses sending palletised goods. Book through a member for nationwide delivery at a fraction of the cost.</div>
+          <div style="font-size:13px; color:var(--dark-grey); line-height:1.5;">Businesses sending palletised goods. Book through a member for nationwide delivery at a fraction of the cost.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 9: Pricing ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 9: Pricing -->
   <div class="slide" data-duration="7000">
     <div class="slide-inner">
       <div class="section-label reveal">Pricing</div>
       <div class="section-title reveal d1" style="font-size:38px;">How Pricing Works</div>
       <div class="stats-row" style="margin-top:24px;">
         <div class="stat-card reveal d2" style="width: 200px;">
-          <div style="font-size:28px; margin-bottom:8px;">üìè</div>
-          <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Pallet Size</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Quarter, half, full, or oversized</div>
-        </div>
-        <div class="stat-card reveal d3" style="width: 200px;">
-          <div style="font-size:28px; margin-bottom:8px;">üó∫Ô∏è</div>
-          <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Distance / Zone</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Zone-based or flat national rates</div>
-        </div>
-        <div class="stat-card reveal d4" style="width: 200px;">
-          <div style="font-size:28px; margin-bottom:8px;">‚öñÔ∏è</div>
-          <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Weight</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Max per size; surcharges if exceeded</div>
-        </div>
-        <div class="stat-card reveal d5" style="width: 200px;">
-          <div style="font-size:28px; margin-bottom:8px;">‚ö°</div>
-          <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Service Level</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Next-day, timed, economy, tail-lift</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 10: Major Networks ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
-  <div class="slide" data-duration="7000">
-    <div class="slide-inner">
-      <div class="section-label reveal">The Market</div>
-      <div class="section-title reveal d1" style="font-size:36px; margin-bottom:24px;">Major UK Pallet Networks</div>
-      <div class="network-grid reveal d2">
-        <div class="network-card">
-          <div class="network-name">Palletways</div>
-          <div class="network-detail">Europe's largest. 450+ members, 24 countries</div>
-        </div>
-        <div class="network-card">
-          <div class="network-name">Pall-Ex</div>
-          <div class="network-detail">State-of-the-art hub in Coalville. ~100 UK members</div>
-        </div>
-        <div class="network-card">
-          <div class="network-name">Palletline</div>
-          <div class="network-detail">Member-owned co-op. ~70 members</div>
-        </div>
-        <div class="network-card">
-          <div class="network-name">TPN</div>
-          <div class="network-detail">Competitive pricing. Hub in Burton-upon-Trent</div>
+          <div style="font-size:28px; margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="16" rx="2" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M4 14h20" stroke="#00E85B" stroke-widthÙà»àº¯ΩÕŸú¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ—¡‡ÏÅôΩπ–µ›ï•ù°–Ë‹¿¿ÏÅçΩ±Ω»ÈŸÖ»†¥µ›°•—î§ÏÅµÖ…ù•∏µâΩ——Ω¥Ë—¡‡Ïà˘AÖ±±ï–ÅM•ÈîΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ…¡‡ÏÅçΩ±Ω»ÈŸÖ»†¥µëÖ…¨µù…ï‰§ÏÅ±•πîµ°ï•ù°–Ëƒ∏–Ïà˘E’Ö…—ï»∞Å°Ö±ò∞Åô’±∞∞ÅΩ»ÅΩŸï…Õ•ÈïêΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâÕ—Ö–µçÖ…êÅ…ïŸïÖ∞ÅêÃàÅÕ—Â±îÙâ›•ë—†ËÄ»¿¡¡‡Ïà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîË»·¡‡ÏÅµÖ…ù•∏µâΩ——Ω¥Ë·¡‡Ïà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒÕŸúÅ›•ë—†Ùà»‡àÅ°ï•ù°–Ùà»‡àÅŸ•ï›	Ω‡Ùà¿Ä¿Ä»‡Ä»‡àÅô•±∞ÙâπΩπîà¯Òç•…ç±îÅç‡Ùàƒ–àÅç‰Ùàƒ–àÅ»Ùàƒ¿àÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùà»àÅô•±∞Ùâ…ùâÑ†¿∞»Ã»∞‰ƒ∞¿∏ƒ§àº¯Ò¡Ö—†ÅêÙâ4ƒ–Ä—Ñƒ¿Äƒ¿Ä¿Ä¿ƒ¿Ä»¿àÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùà»àº¯Ò¡Ö—†ÅêÙâ4–Äƒ—†»¿àÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùàƒ∏‘àº¯ΩÕŸú¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ—¡‡ÏÅôΩπ–µ›ï•ù°–Ë‹¿¿ÏÅçΩ±Ω»ÈŸÖ»†¥µ›°•—î§ÏÅµÖ…ù•∏µâΩ——Ω¥Ë—¡‡Ïà˘•Õ—ÖπçîÄºÅiΩπîΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ…¡‡ÏÅçΩ±Ω»ÈŸÖ»†¥µëÖ…¨µù…ï‰§ÏÅ±•πîµ°ï•ù°–Ëƒ∏–Ïà˘iΩπîµâÖÕïêÅΩ»Åô±Ö–ÅπÖ—•ΩπÖ∞Å…Ö—ïÃΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâÕ—Ö–µçÖ…êÅ…ïŸïÖ∞Åê–àÅÕ—Â±îÙâ›•ë—†ËÄ»¿¡¡‡Ïà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîË»·¡‡ÏÅµÖ…ù•∏µâΩ——Ω¥Ë·¡‡Ïà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒÕŸúÅ›•ë—†Ùà»‡àÅ°ï•ù°–Ùà»‡àÅŸ•ï›	Ω‡Ùà¿Ä¿Ä»‡Ä»‡àÅô•±∞ÙâπΩπîà¯Ò¡Ö—†ÅêÙâ4ƒ–Ä—0–Ä»—†»¡0ƒ–Ä—ËàÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùà»àÅô•±∞Ùâ…ùâÑ†¿∞»Ã»∞‰ƒ∞¿∏ƒ§àº¯Ò¡Ö—†ÅêÙâ4ƒ–Äƒ…ÿŸ4ƒ–Ä»¡ÿƒàÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùà»àÅÕ—…Ω≠îµ±•πïçÖ¿Ùâ…Ω’πêàº¯ΩÕŸú¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ—¡‡ÏÅôΩπ–µ›ï•ù°–Ë‹¿¿ÏÅçΩ±Ω»ÈŸÖ»†¥µ›°•—î§ÏÅµÖ…ù•∏µâΩ——Ω¥Ë—¡‡Ïà˘]ï•ù°–Ωë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ…¡‡ÏÅçΩ±Ω»ÈŸÖ»†¥µëÖ…¨µù…ï‰§ÏÅ±•πîµ°ï•ù°–Ëƒ∏–Ïà˘5Ö‡Å¡ï»ÅÕ•ÈîÏÅÕ’…ç°Ö…ùïÃÅ•òÅï·çïïëïêΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâÕ—Ö–µçÖ…êÅ…ïŸïÖ∞Åê‘àÅÕ—Â±îÙâ›•ë—†ËÄ»¿¡¡‡Ïà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîË»·¡‡ÏÅµÖ…ù•∏µâΩ——Ω¥Ë·¡‡Ïà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒÕŸúÅ›•ë—†Ùà»‡àÅ°ï•ù°–Ùà»‡àÅŸ•ï›	Ω‡Ùà¿Ä¿Ä»‡Ä»‡àÅô•±∞ÙâπΩπîà¯Ò¡Ö—†ÅêÙâ4ƒ–Ä—ÿƒ¡∞ÿÄ–àÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùà»∏‘àÅÕ—…Ω≠îµ±•πïçÖ¿Ùâ…Ω’πêàº¯Òç•…ç±îÅç‡Ùàƒ–àÅç‰Ùàƒ–àÅ»Ùàƒ¿àÅÕ—…Ω≠îÙàå¿¡‡’àÅÕ—…Ω≠îµ›•ë—†Ùà»àÅô•±∞Ùâ…ùâÑ†¿∞»Ã»∞‰ƒ∞¿∏ƒ§àº¯ΩÕŸú¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ—¡‡ÏÅôΩπ–µ›ï•ù°–Ë‹¿¿ÏÅçΩ±Ω»ÈŸÖ»†¥µ›°•—î§ÏÅµÖ…ù•∏µâΩ——Ω¥Ë—¡‡Ïà˘Mï…Ÿ•çîÅ1ïŸï∞Ωë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅÕ—Â±îÙâôΩπ–µÕ•ÈîËƒ…¡‡ÏÅçΩ±Ω»ÈŸÖ»†¥µëÖ…¨µù…ï‰§ÏÅ±•πîµ°ï•ù°–Ëƒ∏–Ïà˘9ï·–µëÖ‰∞Å—•µïê∞ÅïçΩπΩµ‰∞Å—Ö•∞µ±•ô–Ωë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄΩë•ÿ¯(ÄÄΩë•ÿ¯((ÄÄÑ¥¥ÅM1%Äƒ¿ËÅ5Ö©Ω»Å9ï—›Ω…≠ÃÄ¥¥¯(ÄÄÒë•ÿÅç±ÖÕÃÙâÕ±•ëîàÅëÖ—Ñµë’…Ö—•Ω∏Ùà‹¿¿¿à¯(ÄÄÄÄÒë•ÿÅç±ÖÕÃÙâÕ±•ëîµ•ππï»à¯(ÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâÕïç—•Ω∏µ±Öâï∞Å…ïŸïÖ∞à˘Q°îÅ5Ö…≠ï–Ωë•ÿ¯(ÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâÕïç—•Ω∏µ—•—±îÅ…ïŸïÖ∞ÅêƒàÅÕ—Â±îÙâôΩπ–µÕ•ÈîËÃŸ¡‡ÏÅµÖ…ù•∏µâΩ——Ω¥Ë»—¡‡Ïà˘5Ö©Ω»ÅU,ÅAÖ±±ï–Å9ï—›Ω…≠ÃΩë•ÿ¯(ÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µù…•êÅ…ïŸïÖ∞Åê»à¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µçÖ…êà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µπÖµîà˘AÖ±±ï—›ÖÂÃΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µëï—Ö•∞à˘’…Ω¡îùÃÅ±Ö…ùïÕ–∏Ä–‘¿¨Åµïµâï…Ã∞Ä»–ÅçΩ’π—…•ïÃΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µçÖ…êà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µπÖµîà˘AÖ±∞µ‡Ωë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µëï—Ö•∞à˘M—Ö—îµΩòµ—°îµÖ…–Å°’àÅ•∏ÅΩÖ±Ÿ•±±î∏Å¯ƒ¿¿ÅU,Åµïµâï…ÃΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µçÖ…êà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µπÖµîà˘AÖ±±ï—±•πîΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µëï—Ö•∞à˘5ïµâï»µΩ›πïêÅçºµΩ¿∏Å¯‹¿Åµïµâï…ÃΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µçÖ…êà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µπÖµîà˘QA8Ωë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÃÙâπï—›Ω…¨µëï—Ö•∞à˘Ωµ¡ï—•—•ŸîÅ¡…§cing. Hub in Burton-upon-Trent</div>
         </div>
         <div class="network-card">
           <div class="network-name">Fortec</div>
@@ -541,70 +566,78 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 11: Challenges ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 11: Challenges -->
   <div class="slide" data-duration="7000">
     <div class="slide-inner">
       <div class="section-label reveal">Challenges</div>
       <div class="section-title reveal d1" style="font-size:38px; margin-bottom:28px;">Where It Gets Hard</div>
       <div class="stats-row">
         <div class="stat-card reveal d2" style="width:200px;">
-          <div style="font-size:28px; margin-bottom:8px;">üìä</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M8 18l4-6 4 4 4-8" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Visibility</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Tracking across multiple companies & systems</div>
+          <div style="font-size:12px; color:var(--dark-grey); line-height:1.4;">Tracking across multiple companies & systems</div>
         </div>
         <div class="stat-card reveal d3" style="width:200px;">
-          <div style="font-size:28px; margin-bottom:8px;">üîÄ</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14h4l3-6 4 12 3-6h4" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Complexity</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Schedules, capacity, performance, expectations</div>
+          <div style="font-size:12px; color:var(--dark-grey); line-height:1.4;">Schedules, capacity, performance, expectations</div>
         </div>
         <div class="stat-card reveal d4" style="width:200px;">
-          <div style="font-size:28px; margin-bottom:8px;">üíª</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="14" rx="2" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M10 22h8" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/><path d="M14 18v4" stroke="#00E85B" stroke-width="2"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Legacy Systems</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">Outdated software, manual processes, phone & email</div>
+          <div style="font-size:12px; color:var(--dark-grey); line-height:1.4;">Outdated software, manual processes, phone & email</div>
         </div>
         <div class="stat-card reveal d5" style="width:200px;">
-          <div style="font-size:28px; margin-bottom:8px;">üìà</div>
+          <div style="margin-bottom:8px;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 24L10 14 16 18 24 4" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 4h6v6" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:700; color:var(--white); margin-bottom:4px;">Scaling</div>
-          <div style="font-size:12px; color:var(--gray); line-height:1.4;">More pallets, routes, data ‚Äî same headcount</div>
+          <div style="font-size:12px; color:var(--dark-grey); line-height:1.4;">More pallets, routes, data ‚Äî same headcount</div>
         </div>
       </div>
       <div class="body-text reveal d5" style="margin-top:28px; font-size:16px;">This is exactly where technology like <span class="highlight">Qargo</span> adds value.</div>
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 12: Where Qargo Fits ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 12: Where Qargo Fits -->
   <div class="slide" data-duration="8000">
     <div class="slide-inner">
       <div class="section-label reveal">Qargo's Role</div>
-      <div class="section-title reveal d1" style="font-size:34px; margin-bottom:8px;">The Operating System for<br><span style="color:var(--blue-glow)">Pallet Network Members</span></div>
+      <div class="section-title reveal d1" style="font-size:34px; margin-bottom:8px;">The Operating System for<br><span style="color:var(--green)">Pallet Network Members</span></div>
       <div class="cap-grid reveal d2">
         <div class="cap-card">
-          <div class="cap-icon">üìã</div>
+          <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M9 10h10M9 14h10M9 18h6" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/></svg></div>
           <div class="cap-name">Order Management</div>
           <div class="cap-desc">Import orders, manage bookings, handle the full lifecycle</div>
         </div>
         <div class="cap-card">
-          <div class="cap-icon">üó∫Ô∏è</div>
+          <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M8 14c3-4 9-4 12 0" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="14" r="2" fill="#00E85B"/></svg></div>
           <div class="cap-name">Route Planning</div>
           <div class="cap-desc">Optimise routes, maximise drops, reduce mileage</div>
         </div>
         <div class="cap-card">
-          <div class="cap-icon">üìç</div>
+          <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="12" r="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.15)"/><path d="M14 16c-4 0-8 2-8 6h16c0-4-4-6-8-6z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/></svg></div>
           <div class="cap-name">Live Tracking</div>
           <div class="cap-desc">Real-time vehicle tracking & ETA updates</div>
         </div>
         <div class="cap-card">
-          <div class="cap-icon">üì∏</div>
+          <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="6" y="4" width="16" height="20" rx="2" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M10 12l3 3 5-5" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="cap-name">Proof of Delivery</div>
           <div class="cap-desc">Digital PODs with photos, signatures & timestamps</div>
         </div>
         <div class="cap-card">
-          <div class="cap-icon">üîó</div>
+          <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M8 14h12M14 8v12" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/></svg></div>
           <div class="cap-name">Network Integration</div>
           <div class="cap-desc">Auto-import jobs, push status updates</div>
         </div>
         <div class="cap-card">
-          <div class="cap-icon">üìä</div>
+          <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M8 20V14M14 20V10M20 20V6" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
           <div class="cap-name">Reporting</div>
           <div class="cap-desc">Dashboards, cost analysis & operational insights</div>
         </div>
@@ -612,7 +645,7 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 13: Glossary ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 13: Glossary -->
   <div class="slide" data-duration="8000">
     <div class="slide-inner">
       <div class="section-label reveal">Reference</div>
@@ -630,29 +663,38 @@
     </div>
   </div>
 
-  <!-- ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê SLIDE 14: Recap / End ‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê -->
+  <!-- SLIDE 14: Recap / End -->
   <div class="slide" data-duration="6000">
     <div class="slide-inner">
       <div class="reveal" style="margin-bottom:24px;">
-        <span style="font-size:56px;">üéâ</span>
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="28" stroke="#00E85B" stroke-width="3" fill="rgba(0,232,91,0.1)"/>
+          <path d="M20 32l8 8 16-16" stroke="#00E85B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-      <div class="hero-title reveal d1" style="font-size:52px;">Welcome to Qargo</div>
+      <div class="hero-title reveal d1" style="font-size:52px;">Welcome to <span class="accent">Qargo</span></div>
       <div class="section-subtitle reveal d2" style="margin-bottom:32px;">You're going to do great things here.</div>
       <div class="stats-row reveal d3">
         <div class="stat-card">
-          <div style="font-size:20px; margin-bottom:6px;">ü§ù</div>
+          <div style="margin-bottom:6px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M7 12l3 3 5-5" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:600; color:var(--white);">Cooperative model</div>
-          <div style="font-size:12px; color:var(--gray);">of independent hauliers</div>
+          <div style="font-size:12px; color:var(--dark-grey);">of independent hauliers</div>
         </div>
         <div class="stat-card">
-          <div style="font-size:20px; margin-bottom:6px;">üîÑ</div>
+          <div style="margin-bottom:6px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="5" stroke="#00E85B" stroke-width="1.5" fill="rgba(0,232,91,0.1)"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:600; color:var(--white);">Hub-and-spoke</div>
-          <div style="font-size:12px; color:var(--gray);">with overnight sorting</div>
+          <div style="font-size:12px; color:var(--dark-grey);">with overnight sorting</div>
         </div>
         <div class="stat-card">
-          <div style="font-size:20px; margin-bottom:6px;">üöÄ</div>
+          <div style="margin-bottom:6px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20L10 12 16 16 22 4" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
           <div style="font-size:14px; font-weight:600; color:var(--white);">Qargo powers</div>
-          <div style="font-size:12px; color:var(--gray);">the member experience</div>
+          <div style="font-size:12px; color:var(--dark-grey);">the member experience</div>
         </div>
       </div>
     </div>
@@ -660,7 +702,7 @@
 
 </div>
 
-<!-- ‚îÄ‚îÄ Controls ‚îÄ‚îÄ -->
+<!-- Controls -->
 <div id="controls">
   <button id="prev-btn" title="Previous">‚óÄ</button>
   <button id="play-btn" title="Play/Pause" class="active">‚è∏</button>
