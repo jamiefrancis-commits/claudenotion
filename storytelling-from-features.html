@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Storytelling from Features | Qargo Solution Engineering</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--qargo-green:#00E85B;--qargo-navy:#1C2C31;--qargo-navy-90:#304045;--qargo-navy-70:#606B6F;--qargo-navy-10:#D4E1E5;--secondary-green:#24D269;--mint-tint:#EBFFF5;--off-white:#FEFEFE;--dark-grey:#BBC0C1}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--qargo-navy);color:var(--off-white);line-height:1.6;overflow-x:hidden}
+    .hero{position:relative;padding:60px 40px 50px;background:linear-gradient(135deg,var(--qargo-navy) 0%,#243840 100%);overflow:hidden;text-align:center}
+    .hero::before{content:'';position:absolute;top:-80px;right:-120px;width:400px;height:400px;background:var(--qargo-green);clip-path:polygon(25% 0%,100% 0%,75% 100%,0% 100%);opacity:.06;transform:rotate(-15deg)}
+    .hero::after{content:'';position:absolute;bottom:-60px;left:-80px;width:300px;height:300px;background:var(--qargo-green);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);opacity:.04}
+    .logo-bar{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:32px}
+    .logo-mark{width:36px;height:36px}
+    .badge{display:inline-block;background:rgba(0,232,91,.12);color:var(--qargo-green);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:20px;border:1px solid rgba(0,232,91,.2);margin-bottom:20px}
+    .hero h1{font-size:42px;font-weight:700;line-height:1.15;margin-bottom:16px}
+    .hero h1 span{background:linear-gradient(90deg,var(--qargo-green),var(--secondary-green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{font-size:17px;color:var(--dark-grey);max-width:580px;margin:0 auto}
+    .video-section{padding:0 40px 50px;background:var(--qargo-navy)}
+    .video-wrapper{max-width:800px;margin:0 auto;position:relative;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(0,232,91,.15)}
+    .video-wrapper::before{content:'';position:absolute;inset:-2px;background:linear-gradient(135deg,var(--qargo-green),transparent 50%,var(--secondary-green));border-radius:18px;z-index:-1;opacity:.4}
+    .video-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px}
+    .video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+    .video-credit{text-align:center;margin-top:14px;font-size:13px;color:var(--qargo-navy-70)}
+    .video-credit a{color:var(--qargo-green);text-decoration:none}
+    .framework{padding:60px 40px;background:linear-gradient(180deg,var(--qargo-navy) 0%,#1a2a2f 100%)}
+    .framework-header{text-align:center;margin-bottom:48px}
+    .framework-header h2{font-size:32px;font-weight:700;margin-bottom:12px}
+    .framework-header h2 span{color:var(--qargo-green)}
+    .framework-header p{font-size:16px;color:var(--dark-grey);max-width:600px;margin:0 auto}
+    .steps{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+    .step-card{display:grid;grid-template-columns:80px 1fr;gap:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:32px;transition:border-color .3s,transform .2s}
+    .step-card:hover{border-color:rgba(0,232,91,.2);transform:translateY(-2px)}
+    .step-number-area{display:flex;flex-direction:column;align-items:center}
+    .step-number{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700}
+    .step-card:nth-child(1) .step-number{background:linear-gradient(135deg,var(--qargo-green),#00c94e);color:var(--qargo-navy)}
+    .step-card:nth-child(2) .step-number{background:linear-gradient(135deg,#36BB6B,var(--secondary-green));color:var(--qargo-navy)}
+    .step-card:nth-child(3) .step-number{background:linear-gradient(135deg,var(--qargo-navy),var(--qargo-navy-90));color:var(--qargo-green);border:2px solid var(--qargo-green)}
+    .step-connector{width:2px;flex:1;background:linear-gradient(180deg,var(--qargo-green) 0%,transparent 100%);margin-top:8px;opacity:.3}
+    .step-content h3{font-size:22px;font-weight:600;margin-bottom:8px}
+    .step-content h3 .label{color:var(--qargo-green);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px}
+    .step-content>p{font-size:15px;color:var(--dark-grey);margin-bottom:16px;line-height:1.7}
+    .example-box{background:rgba(0,232,91,.05);border-left:3px solid var(--qargo-green);border-radius:0 10px 10px 0;padding:16px 20px}
+    .example-box .example-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--qargo-green);margin-bottom:8px}
+    .example-box p{font-size:14px;color:rgba(255,255,255,.75);line-height:1.7;font-style:italic}
+    .contrast-section{padding:60px 40px;background:var(--qargo-navy)}
+    .contrast-section h2{text-align:center;font-size:28px;font-weight:700;margin-bottom:36px}
+    .contrast-grid{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .contrast-card{border-radius:14px;padding:28px}
+    .contrast-card.dont{background:rgba(255,94,122,.06);border:1px solid rgba(255,94,122,.15)}
+    .contrast-card.do{background:rgba(0,232,91,.06);border:1px solid rgba(0,232,91,.15)}
+    .contrast-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .contrast-card.dont .contrast-label{color:#FF5E7A}
+    .contrast-card.do .contrast-label{color:var(--qargo-green)}
+    .contrast-card p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.7)}
+    .cheatsheet{padding:60px 40px;background:linear-gradient(180deg,#1a2a2f 0%,var(--qargo-navy) 100%)}
+    .cheatsheet-header{text-align:center;margin-bottom:40px}
+    .cheatsheet-header h2{font-size:28px;font-weight:700;margin-bottom:10px}
+    .cheatsheet-header h2 span{color:var(--qargo-green)}
+    .cheatsheet-header p{font-size:15px;color:var(--dark-grey)}
+    .feature-stories{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+    .feature-story{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;transition:border-color .3s}
+    .feature-story:hover{border-color:rgba(0,232,91,.2)}
+    .feature-story-header{display:flex;align-items:center;gap:14px;padding:20px 24px;cursor:pointer;user-select:none}
+    .feature-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,232,91,.1);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .feature-story-header h4{font-size:16px;font-weight:600;flex:1}
+    .toggle-icon{color:var(--qargo-green);font-size:20px;transition:transform .3s;font-weight:300}
+    .feature-story.open .toggle-icon{transform:rotate(45deg)}
+    .feature-story-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+    .feature-story.open .feature-story-body{max-height:600px}
+    .feature-story-content{padding:0 24px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .story-phase{background:rgba(0,0,0,.15);border-radius:10px;padding:16px}
+    .story-phase .phase-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--qargo-green);margin-bottom:8px}
+    .story-phase p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.65}
+    .footer-cta{padding:50px 40px 40px;background:linear-gradient(135deg,var(--qargo-green) 0%,#00c94e 50%,var(--secondary-green) 100%);text-align:center;position:relative;overflow:hidden}
+    .footer-cta::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:rgba(255,255,255,.08);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+    .footer-cta h2{font-size:28px;font-weight:700;color:var(--qargo-navy);margin-bottom:12px;position:relative}
+    .footer-cta p{font-size:16px;color:rgba(28,44,49,.7);max-width:500px;margin:0 auto 24px;position:relative}
+    .footer-cta .mantra{display:inline-block;background:var(--qargo-navy);color:var(--qargo-green);padding:12px 32px;border-radius:10px;font-size:15px;font-weight:600;position:relative}
+    @media(max-width:768px){.hero{padding:40px 24px 36px}.hero h1{font-size:30px}.video-section{padding:0 24px 40px}.framework,.contrast-section,.cheatsheet{padding:40px 24px}.step-card{grid-template-columns:1fr;gap:16px}.step-number-area{flex-direction:row;gap:12px}.step-connector{width:auto;height:2px;margin-top:0;flex:1}.contrast-grid{grid-template-columns:1fr}.feature-story-content{grid-template-columns:1fr}}
+  </style>
+</head>\n<body>
+  <section class="hero">
+    <div class="logo-bar">
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5L90 27.5V72.5L50 95L10 72.5V27.5L50 5Z" fill="#00E85B"/>
+        <path d="M50 30L70 41.5V64.5L50 76L30 64.5V41.5L50 30Z" fill="#1C2C31"/>
+        <path d="M50 76L30 64.5V80L50 95L50 76Z" fill="#00c94e"/>
+      </svg>
+    </div>
+    <div class="badge">Solution Engineering Playbook</div>
+    <h1>How to Tell <span>Stories</span><br>from Features</h1>
+    <p>Stop listing features. Start creating moments your prospects remember. A framework for turning Qargo capabilities into narratives that close deals.</p>
+  </section>
+
+  <section class="video-section">
+    <div class="video-wrapper">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/OLBz9qa3mfs?rel=0&modestbranding=1&color=white" title="How To Tell Stories In Sales And Sales Engineering" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+    <p class="video-credit">Video by <a href="https://www.youtube.com/@RewDickinson" target="_blank" rel="noopener">Rew Dickinson</a> &mdash; 2 min watch</p>
+  </section>
+
+  <section class="framework">
+    <div class="framework-header">
+      <h2>The <span>3-Step</span> Story Framework</h2>
+      <p>Every feature you demo has a story hiding inside it. Here's how to find it and tell it in a way that makes prospects lean in.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-number-area"><div class="step-number">1</div><div class="step-connector"></div></div>
+        <div class="step-content">
+          <h3><span class="label">The Setup</span>Paint the "Before" World</h3>
+          <p>Describe the painful reality your prospect lives in right now. Use specifics they recognise: the spreadsheet chaos, the 3am phone calls, the revenue leaking through the cracks. Make them nod.</p>
+          <div class="example-box">
+            <div class="example-label">Qargo Example</div>
+            <p>"Picture this: it's Monday morning and your planner has 40 orders to schedule. They're juggling three spreadsheets, calling drivers on WhatsApp, and manually checking which trailer is at which depot. By 10am they've already made two mistakes that will cost real money."</p>
+          </div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number-area"><div class="step-number">2</div><div class="step-connector"></div></div>
+        <div class="step-content">
+          <h3><span class="label">The Shift</span>Introduce the Change</h3>
+          <p>This is where Qargo enters the story &mdash; not as a product pitch, but as the turning point. Show the moment everything changes. Keep it brief, specific, and visual.</p>
+          <div class="example-box">
+            <div class="example-label">Qargo Example</div>
+            <p>"Now, that same planner opens Qargo. Every order is already there, auto-imported from their customers' systems. The optimiser has grouped loads by route and matched them to available drivers. Instead of building the puzzle from scratch, they're reviewing a plan that's already 90% done."</p>
+          </div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number-area"><div class="step-number">3</div></div>
+        <div class="step-content">
+          <h3><span class="label">The Payoff</span>Reveal the "After" World</h3>
+          <p>Paint the outcome &mdash; not in feature language, but in the customer's language. Think: time saved, stress reduced, revenue gained, errors eliminated. Make the future feel real and achievable.</p>
+          <div class="example-box">
+            <div class="example-label">Qargo Example</div>
+            <p>"By 9:15, planning is done. The planner spends the rest of their morning handling exceptions instead of building plans. They go home on time. Drivers know their schedules before they've finished breakfast. And finance? They can see exactly what every load is costing in real time."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>\n
+  <section class="contrast-section">
+    <h2>Feature Dumping vs. Storytelling</h2>
+    <div class="contrast-grid">
+      <div class="contrast-card dont">
+        <div class="contrast-label"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5E7A" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Feature Dump</div>
+        <p>"Qargo has automated planning, real-time visibility, driver app integration, CMR generation, subcontractor management, and API connections. You can also configure custom workflows and set up automated notifications."</p>
+      </div>
+      <div class="contrast-card do">
+        <div class="contrast-label"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Story</div>
+        <p>"One of our customers used to spend two hours every morning just building their plan. Their planner was so stressed she was thinking about quitting. Three weeks after going live with Qargo, planning takes 15 minutes. She told us she finally has time to actually manage exceptions instead of just reacting to them."</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cheatsheet">
+    <div class="cheatsheet-header">
+      <h2>Story <span>Starters</span> by Feature</h2>
+      <p>Click any feature to see a ready-to-use story scaffold you can adapt for your next call.</p>
+    </div>
+    <div class="feature-stories">
+      <div class="feature-story">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')"><div class="feature-icon">&#x1F4CB;</div><h4>Automated Planning &amp; Optimisation</h4><span class="toggle-icon">+</span></div>
+        <div class="feature-story-body"><div class="feature-story-content">
+          <div class="story-phase"><div class="phase-label">Before</div><p>Planners spending 2+ hours manually assigning orders. Constant re-planning as drivers call in sick or loads change. Revenue lost to empty kilometres.</p></div>
+          <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo's optimiser builds the plan in minutes, factoring in vehicle type, driver hours, location, and delivery windows automatically.</p></div>
+          <div class="story-phase"><div class="phase-label">After</div><p>Planning in 15 minutes. 12% fewer empty kilometres. Planners now focus on exceptions and customer relationships instead of puzzle-solving.</p></div>
+        </div></div>
+      </div>
+      <div class="feature-story">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')"><div class="feature-icon">&#x1F4F1;</div><h4>Driver App &amp; Real-time Visibility</h4><span class="toggle-icon">+</span></div>
+        <div class="feature-story-body"><div class="feature-story-content">
+          <div class="story-phase"><div class="phase-label">Before</div><p>Operations managers fielding dozens of "where's my truck?" calls daily. Drivers using WhatsApp for PODs. No audit trail. Customers frustrated by lack of updates.</p></div>
+          <div class="story-phase"><div class="phase-label">Shift</div><p>Every driver has real-time updates on their phone. PODs are captured digitally and attached to the order instantly. Customers get live tracking links.</p></div>
+          <div class="story-phase"><div class="phase-label">After</div><p>80% fewer "where's my truck?" calls. PODs available within minutes of delivery. Customer satisfaction scores up. Operations team reclaims hours every week.</p></div>
+        </div></div>
+      </div>
+      <div class="feature-story">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')"><div class="feature-icon">&#x1F4C4;</div><h4>Automated Documentation (CMR/ePOD)</h4><span class="toggle-icon">+</span></div>
+        <div class="feature-story-body"><div class="feature-story-content">
+          <div class="story-phase"><div class="phase-label">Before</div><p>Admin teams buried in paper CMRs. Missing documents delaying invoicing by days. Disputes unresolvable because nobody can find the original paperwork.</p></div>
+          <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo generates CMRs automatically and captures electronic proof of delivery. Everything is linked, searchable, and archived in one place.</p></div>
+          <div class="story-phase"><div class="phase-label">After</div><p>Invoicing within 24 hours of delivery. Disputes resolved in minutes with full digital audit trail. Admin team freed up to focus on growth.</p></div>
+        </div></div>
+      </div>
+      <div class="feature-story">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')"><div class="feature-icon">&#x1F517;</div><h4>Integrations &amp; API</h4><span class="toggle-icon">+</span></div>
+        <div class="feature-story-body"><div class="feature-story-content">
+          <div class="story-phase"><div class="phase-label">Before</div><p>Orders arriving by email, phone, and portal. Someone manually re-keying every order into the TMS. Errors creeping in. Customers sending the same information twice.</p></div>
+          <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo connects directly to customer systems, ERPs, and partner platforms. Orders flow in automatically with zero manual entry.</p></div>
+          <div class="story-phase"><div class="phase-label">After</div><p>Zero re-keying errors. Orders appear in Qargo the moment they're created. Customers see live status updates in their own systems. Everyone works from one source of truth.</p></div>
+        </div></div>
+      </div>
+      <div class="feature-story">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')"><div class="feature-icon">&#x1F4B0;</div><h4>Subcontractor Management</h4><span class="toggle-icon">+</span></div>
+        <div class="feature-story-body"><div class="feature-story-content">
+          <div class="story-phase"><div class="phase-label">Before</div><p>Subcontractor rates tracked in spreadsheets. No visibility on whether outsourced loads are profitable. Disputes about agreed prices. Chaotic self-billing process.</p></div>
+          <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo stores rate cards, auto-calculates costs, and gives real-time margin visibility on every subcontracted load. Digital acceptance and self-billing built in.</p></div>
+          <div class="story-phase"><div class="phase-label">After</div><p>Full margin visibility per load, per sub. Rate disputes eliminated. Self-billing automated. Finance team knows exactly what's owed, to whom, before the month is closed.</p></div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <h2>Remember the Golden Rule</h2>
+    <p>Features tell. Stories sell. Every time you demo a feature, wrap it in a Before &rarr; Shift &rarr; After story and watch your prospects lean in.</p>
+    <div class="mantra">Before &rarr; Shift &rarr; After</div>
+  </section>
+</body>
+</html>
