@@ -30,7 +30,7 @@
       overflow-x: hidden;
     }
 
-    /* âââ HERO SECTION âââ */
+    /* ─── HERO SECTION ─── */
     .hero {
       position: relative;
       padding: 60px 40px 50px;
@@ -114,7 +114,7 @@
       font-weight: 400;
     }
 
-    /* âââ WALKTHROUGH INTRO âââ */
+    /* ─── WALKTHROUGH INTRO ─── */
     .walkthrough-intro {
       padding: 0 40px 50px;
       background: var(--qargo-navy);
@@ -206,7 +206,7 @@
       }
     }
 
-    /* âââ FRAMEWORK SECTION âââ */
+    /* ─── FRAMEWORK SECTION ─── */
     .framework {
       padding: 60px 40px;
       background: linear-gradient(180deg, var(--qargo-navy) 0%, #1a2a2f 100%);
@@ -234,7 +234,7 @@
       margin: 0 auto;
     }
 
-    /* âââ STEP CARDS âââ */
+    /* ─── STEP CARDS ─── */
     .steps {
       max-width: 860px;
       margin: 0 auto;
@@ -350,7 +350,7 @@
       font-style: italic;
     }
 
-    /* âââ ANTI-PATTERN / DO-DON'T âââ */
+    /* ─── ANTI-PATTERN / DO-DON'T ─── */
     .contrast-section {
       padding: 60px 40px;
       background: var(--qargo-navy);
@@ -407,7 +407,7 @@
       color: rgba(255,255,255,0.85);
     }
 
-    /* âââ CHEATSHEET âââ */
+    /* ─── CHEATSHEET ─── */
     .cheatsheet {
       padding: 60px 40px;
       background: linear-gradient(180deg, #1a2a2f 0%, var(--qargo-navy) 100%);
@@ -527,7 +527,7 @@
       line-height: 1.65;
     }
 
-    /* âââ CTA / FOOTER âââ */
+    /* ─── CTA / FOOTER ─── */
     .footer-cta {
       padding: 50px 40px 40px;
       background: linear-gradient(135deg, var(--qargo-green) 0%, #00c94e 50%, var(--secondary-green) 100%);
@@ -575,7 +575,7 @@
       position: relative;
     }
 
-    /* âââ RESPONSIVE âââ */
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       .hero { padding: 40px 24px 36px; }
       .hero h1 { font-size: 30px; }
@@ -612,14 +612,23 @@
 </head>
 <body>
 
-  <!-- âââ HERO âââ -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
     <div class="logo-bar">
-      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Outer Q circle -->
-        <circle cx="48" cy="46" r="34" stroke="#00E85B" stroke-width="12" fill="none"/>
-        <!-- Q tail -->
-        <line x1="62" y1="64" x2="88" y2="92" stroke="#00E85B" stroke-width="12" stroke-linecap="round"/>
+      <svg class="logo-mark" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Qargo isometric 3D Q logomark -->
+        <!-- Main cube - Top face -->
+        <path d="M50 8 L85 28 L50 48 L15 28 Z M50 32 L36 40 L50 48 L64 40 Z" fill="#00E85B" fill-rule="evenodd"/>
+        <!-- Main cube - Left face -->
+        <path d="M15 28 L50 48 L50 88 L15 68 Z M36 40 L50 48 L50 64 L36 56 Z" fill="#00C04A" fill-rule="evenodd"/>
+        <!-- Main cube - Right face -->
+        <path d="M85 28 L85 68 L50 88 L50 48 Z M64 40 L50 48 L50 64 L64 56 Z" fill="#6AE894" fill-rule="evenodd"/>
+        <!-- Q tail - Top face -->
+        <polygon points="50,88 62,81 74,88 62,95" fill="#00E85B"/>
+        <!-- Q tail - Left face -->
+        <polygon points="50,88 62,95 62,109 50,102" fill="#00C04A"/>
+        <!-- Q tail - Right face -->
+        <polygon points="62,95 74,88 74,102 62,109" fill="#6AE894"/>
       </svg>
     </div>
     <div class="badge">Solution Engineering Playbook</div>
@@ -627,7 +636,7 @@
     <p>Stop listing features. Start creating moments your prospects remember. A framework for turning Qargo capabilities into narratives that close deals.</p>
   </section>
 
-  <!-- âââ WALKTHROUGH INTRO âââ -->
+  <!-- ═══ WALKTHROUGH INTRO ═══ -->
   <section class="walkthrough-intro">
     <div class="walkthrough-steps">
       <div class="wt-step">
@@ -648,11 +657,11 @@
     </div>
   </section>
 
-  <!-- âââ 3-STEP FRAMEWORK âââ -->
+  <!-- ═══ 3-STEP FRAMEWORK ═══ -->
   <section class="framework">
     <div class="framework-header">
       <h2>The <span>3-Step</span> Story Framework</h2>
-      <p>Every feature you demo has a story hiding inside it. Here's how to find it and tell it in a way that makes prospects lean in.</p>
+      <p>Every feature you demo has a story hiding inside it. Here\'s how to find it and tell it in a way that makes prospects lean in.</p>
     </div>
 
     <div class="steps">
@@ -671,7 +680,7 @@
           <p>Describe the painful reality your prospect lives in right now. Use specifics they recognise: the spreadsheet chaos, the 3am phone calls, the revenue leaking through the cracks. Make them nod.</p>
           <div class="example-box">
             <div class="example-label">Qargo Example</div>
-            <p>"Picture this: it's Monday morning and your planner has 40 orders to schedule. They're juggling three spreadsheets, calling drivers on WhatsApp, and manually checking which trailer is at which depot. By 10am they've already made two mistakes that will cost real money."</p>
+            <p>"Picture this: it\'s Monday morning and your planner has 40 orders to schedule. They\'re juggling three spreadsheets, calling drivers on WhatsApp, and manually checking which trailer is at which depot. By 10am they\'ve already made two mistakes that will cost real money."</p>
           </div>
         </div>
       </div>
@@ -690,7 +699,7 @@
           <p>This is where Qargo enters the story &mdash; not as a product pitch, but as the turning point. Show the moment everything changes. Keep it brief, specific, and visual.</p>
           <div class="example-box">
             <div class="example-label">Qargo Example</div>
-            <p>"Now, that same planner opens Qargo. Every order is already there, auto-imported from their customers' systems. The optimiser has grouped loads by route and matched them to available drivers. Instead of building the puzzle from scratch, they're reviewing a plan that's already 90% done."</p>
+            <p>"Now, that same planner opens Qargo. Every order is already there, auto-imported from their customers\' systems. The optimiser has grouped loads by route and matched them to available drivers. Instead of building the puzzle from scratch, they\'re reviewing a plan that\'s already 90% done."</p>
           </div>
         </div>
       </div>
@@ -705,10 +714,10 @@
             <span class="label">The Payoff</span>
             Reveal the "After" World
           </h3>
-          <p>Paint the outcome &mdash; not in feature language, but in the customer's language. Think: time saved, stress reduced, revenue gained, errors eliminated. Make the future feel real and achievable.</p>
+          <p>Paint the outcome &mdash; not in feature language, but in the customer\'s language. Think: time saved, stress reduced, revenue gained, errors eliminated. Make the future feel real and achievable.</p>
           <div class="example-box">
             <div class="example-label">Qargo Example</div>
-            <p>"By 9:15, planning is done. The planner spends the rest of their morning handling exceptions instead of building plans. They go home on time. Drivers know their schedules before they've finished breakfast. And finance? They can see exactly what every load is costing in real time."</p>
+            <p>"By 9:15, planning is done. The planner spends the rest of their morning handling exceptions instead of building plans. They go home on time. Drivers know their schedules before they\'ve finished breakfast. And finance? They can see exactly what every load is costing in real time."</p>
           </div>
         </div>
       </div>
@@ -716,7 +725,7 @@
     </div>
   </section>
 
-  <!-- âââ DO / DON'T âââ -->
+  <!-- ═══ DO / DON'T ═══ -->
   <section class="contrast-section">
     <h2>Feature Dumping vs. Storytelling</h2>
     <div class="contrast-grid">
@@ -737,7 +746,7 @@
     </div>
   </section>
 
-  <!-- âââ FEATURE STORY CHEATSHEET âââ -->
+  <!-- ═══ FEATURE STORY CHEATSHEET ═══ -->
   <section class="cheatsheet">
     <div class="cheatsheet-header">
       <h2>Story <span>Starters</span> by Feature</h2>
@@ -747,37 +756,37 @@
     <div class="feature-stories">
 
       <div class="feature-story">
-        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle(\'open\')">
           <div class="feature-icon">&#x1F4CB;</div>
-          <h4>Automated Planning & Optimisation</h4>
+          <h4>Automated Planning &amp; Optimisation</h4>
           <span class="toggle-icon">+</span>
         </div>
         <div class="feature-story-body">
           <div class="feature-story-content">
             <div class="story-phase"><div class="phase-label">Before</div><p>Planners spending 2+ hours manually assigning orders. Constant re-planning as drivers call in sick or loads change. Revenue lost to empty kilometres.</p></div>
-            <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo's optimiser builds the plan in minutes, factoring in vehicle type, driver hours, location, and delivery windows automatically.</p></div>
+            <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo\'s optimiser builds the plan in minutes, factoring in vehicle type, driver hours, location, and delivery windows automatically.</p></div>
             <div class="story-phase"><div class="phase-label">After</div><p>Planning in 15 minutes. 12% fewer empty kilometres. Planners now focus on exceptions and customer relationships instead of puzzle-solving.</p></div>
           </div>
         </div>
       </div>
 
       <div class="feature-story">
-        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle(\'open\')">
           <div class="feature-icon">&#x1F4F1;</div>
-          <h4>Driver App & Real-time Visibility</h4>
+          <h4>Driver App &amp; Real-time Visibility</h4>
           <span class="toggle-icon">+</span>
         </div>
         <div class="feature-story-body">
           <div class="feature-story-content">
-            <div class="story-phase"><div class="phase-label">Before</div><p>Operations managers fielding dozens of "where's my truck?" calls daily. Drivers using WhatsApp for PODs. No audit trail. Customers frustrated by lack of updates.</p></div>
+            <div class="story-phase"><div class="phase-label">Before</div><p>Operations managers fielding dozens of "where\'s my truck?" calls daily. Drivers using WhatsApp for PODs. No audit trail. Customers frustrated by lack of updates.</p></div>
             <div class="story-phase"><div class="phase-label">Shift</div><p>Every driver has real-time updates on their phone. PODs are captured digitally and attached to the order instantly. Customers get live tracking links.</p></div>
-            <div class="story-phase"><div class="phase-label">After</div><p>80% fewer "where's my truck?" calls. PODs available within minutes of delivery. Customer satisfaction scores up. Operations team reclaims hours every week.</p></div>
+            <div class="story-phase"><div class="phase-label">After</div><p>80% fewer "where\'s my truck?" calls. PODs available within minutes of delivery. Customer satisfaction scores up. Operations team reclaims hours every week.</p></div>
           </div>
         </div>
       </div>
 
       <div class="feature-story">
-        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle(\'open\')">
           <div class="feature-icon">&#x1F4C4;</div>
           <h4>Automated Documentation (CMR/ePOD)</h4>
           <span class="toggle-icon">+</span>
@@ -792,22 +801,22 @@
       </div>
 
       <div class="feature-story">
-        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle(\'open\')">
           <div class="feature-icon">&#x1F517;</div>
-          <h4>Integrations & API</h4>
+          <h4>Integrations &amp; API</h4>
           <span class="toggle-icon">+</span>
         </div>
         <div class="feature-story-body">
           <div class="feature-story-content">
             <div class="story-phase"><div class="phase-label">Before</div><p>Orders arriving by email, phone, and portal. Someone manually re-keying every order into the TMS. Errors creeping in. Customers sending the same information twice.</p></div>
             <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo connects directly to customer systems, ERPs, and partner platforms. Orders flow in automatically with zero manual entry.</p></div>
-            <div class="story-phase"><div class="phase-label">After</div><p>Zero re-keying errors. Orders appear in Qargo the moment they're created. Customers see live status updates in their own systems. Everyone works from one source of truth.</p></div>
+            <div class="story-phase"><div class="phase-label">After</div><p>Zero re-keying errors. Orders appear in Qargo the moment they\'re created. Customers see live status updates in their own systems. Everyone works from one source of truth.</p></div>
           </div>
         </div>
       </div>
 
       <div class="feature-story">
-        <div class="feature-story-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="feature-story-header" onclick="this.parentElement.classList.toggle(\'open\')">
           <div class="feature-icon">&#x1F4B0;</div>
           <h4>Subcontractor Management</h4>
           <span class="toggle-icon">+</span>
@@ -816,7 +825,7 @@
           <div class="feature-story-content">
             <div class="story-phase"><div class="phase-label">Before</div><p>Subcontractor rates tracked in spreadsheets. No visibility on whether outsourced loads are profitable. Disputes about agreed prices. Chaotic self-billing process.</p></div>
             <div class="story-phase"><div class="phase-label">Shift</div><p>Qargo stores rate cards, auto-calculates costs, and gives real-time margin visibility on every subcontracted load. Digital acceptance and self-billing built in.</p></div>
-            <div class="story-phase"><div class="phase-label">After</div><p>Full margin visibility per load, per sub. Rate disputes eliminated. Self-billing automated. Finance team knows exactly what's owed, to whom, before the month is closed.</p></div>
+            <div class="story-phase"><div class="phase-label">After</div><p>Full margin visibility per load, per sub. Rate disputes eliminated. Self-billing automated. Finance team knows exactly what\'s owed, to whom, before the month is closed.</p></div>
           </div>
         </div>
       </div>
@@ -824,7 +833,7 @@
     </div>
   </section>
 
-  <!-- âââ FOOTER CTA âââ -->
+  <!-- ═══ FOOTER CTA ═══ -->
   <section class="footer-cta">
     <h2>Remember the Golden Rule</h2>
     <p>Features tell. Stories sell. Every time you demo a feature, wrap it in a Before &rarr; Shift &rarr; After story and watch your prospects lean in.</p>
