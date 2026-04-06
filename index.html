@@ -37,7 +37,7 @@
     width: 100vw;
   }
 
-  /* ââ Progress bar ââ */
+  /* ── Progress bar ── */
   #progress-bar {
     position: fixed; top: 0; left: 0; height: 4px;
     background: linear-gradient(90deg, var(--green), var(--iso-green-1));
@@ -45,7 +45,7 @@
     box-shadow: 0 0 12px rgba(0,232,91,0.4);
   }
 
-  /* ââ Controls ââ */
+  /* ── Controls ── */
   #controls {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
     display: flex; align-items: center; gap: 16px; z-index: 999;
@@ -65,7 +65,7 @@
     min-width: 60px; text-align: center;
   }
 
-  /* ââ Slide container ââ */
+  /* ── Slide container ── */
   #slideshow {
     width: 100vw; height: 100vh;
     position: relative; overflow: hidden;
@@ -87,7 +87,7 @@
     max-width: 960px; width: 100%; text-align: center;
   }
 
-  /* ââ Animated elements ââ */
+  /* ── Animated elements ── */
   .reveal {
     opacity: 0; transform: translateY(30px);
     transition: opacity 0.7s ease, transform 0.7s ease;
@@ -99,7 +99,7 @@
   .slide.active .reveal.d4 { transition-delay: 1.2s; }
   .slide.active .reveal.d5 { transition-delay: 1.5s; }
 
-  /* ââ Typography ââ */
+  /* ── Typography ── */
   .hero-title {
     font-size: 64px; font-weight: 700; line-height: 1.1;
     color: var(--white);
@@ -135,13 +135,13 @@
   .highlight-amber { color: var(--amber); font-weight: 600; }
   .highlight-red { color: var(--red); font-weight: 600; }
 
-  /* ââ Chevron brand element ââ */
+  /* ── Chevron brand element ── */
   .chevron-divider {
     display: inline-block; margin: 0 8px; color: var(--green);
     font-size: 1.2em; opacity: 0.6;
   }
 
-  /* ââ Stat cards ââ */
+  /* ── Stat cards ── */
   .stats-row {
     display: flex; gap: 24px; justify-content: center;
     margin-top: 32px; flex-wrap: wrap;
@@ -153,7 +153,7 @@
     min-width: 180px; text-align: center;
   }
 
-  /* ââ Hub diagram ââ */
+  /* ── Hub diagram ── */
   .hub-container {
     position: relative; width: 420px; height: 420px;
     margin: 0 auto;
@@ -187,7 +187,7 @@
   @keyframes fadeInNode { to { opacity: 1; } }
   @keyframes growLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-  /* ââ Step cards ââ */
+  /* ── Step cards ── */
   .steps-grid {
     display: flex; gap: 12px; justify-content: center;
     margin-top: 30px; flex-wrap: wrap;
@@ -210,7 +210,7 @@
     font-size: 11px; color: var(--dark-grey); line-height: 1.4;
   }
 
-  /* ââ Comparison ââ */
+  /* ── Comparison ── */
   .compare-row {
     display: flex; gap: 32px; justify-content: center; margin-top: 32px;
   }
@@ -237,7 +237,7 @@
   .compare-label { color: var(--dark-grey); }
   .compare-value { font-weight: 600; }
 
-  /* ââ Network logos ââ */
+  /* ── Network logos ── */
   .network-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 12px; margin-top: 20px; max-width: 900px; margin-left: auto; margin-right: auto;
@@ -254,7 +254,7 @@
     font-size: 11px; color: var(--dark-grey); line-height: 1.45;
   }
 
-  /* ââ Capability table ââ */
+  /* ── Capability table ── */
   .cap-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 16px; margin-top: 28px; max-width: 780px; margin-left: auto; margin-right: auto;
@@ -268,7 +268,7 @@
   .cap-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
   .cap-desc { font-size: 12px; color: var(--dark-grey); line-height: 1.5; }
 
-  /* ââ Glossary ââ */
+  /* ── Glossary ── */
   .glossary-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
     gap: 12px; margin-top: 24px; max-width: 740px; margin-left: auto; margin-right: auto;
@@ -282,7 +282,7 @@
   .glossary-term { font-size: 14px; font-weight: 700; color: var(--green); }
   .glossary-def { font-size: 12px; color: var(--dark-grey); margin-top: 2px; line-height: 1.4; }
 
-  /* ââ Icon badge ââ */
+  /* ── Icon badge ── */
   .emoji-badge {
     display: inline-flex; align-items: center; justify-content: center;
     width: 56px; height: 56px; border-radius: 14px;
@@ -290,14 +290,14 @@
     margin-bottom: 14px;
   }
 
-  /* ââ Pulse animation for hub ââ */
+  /* ── Pulse animation for hub ── */
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 40px rgba(0,232,91,0.3); }
     50% { box-shadow: 0 0 60px rgba(0,232,91,0.5); }
   }
   .hub-center { animation: pulse 2.5s ease-in-out infinite; }
 
-  /* ââ Background decorative elements ââ */
+  /* ── Background decorative elements ── */
   .bg-glow {
     position: fixed; border-radius: 50%; filter: blur(120px);
     pointer-events: none; z-index: -1;
@@ -305,7 +305,7 @@
   .bg-glow.g1 { width: 600px; height: 600px; background: rgba(0,232,91,0.05); top: -200px; right: -200px; }
   .bg-glow.g2 { width: 500px; height: 500px; background: rgba(0,232,91,0.03); bottom: -150px; left: -150px; }
 
-  /* ââ Chevron background pattern ââ */
+  /* ── Chevron background pattern ── */
   .bg-chevron {
     position: fixed;
     bottom: -80px;
@@ -318,7 +318,7 @@
   }
   .bg-chevron svg { width: 100%; height: 100%; }
 
-  /* ââ Qargo badge ââ */
+  /* ── Qargo badge ── */
   .qargo-badge {
     display: inline-block;
     background: linear-gradient(135deg, var(--green), var(--iso-green-2));
@@ -327,7 +327,7 @@
     color: var(--navy);
   }
 
-  /* ââ Highlight callout ââ */
+  /* ── Highlight callout ── */
   .callout-green {
     background: rgba(0,232,91,0.08);
     border: 1px solid rgba(0,232,91,0.2);
@@ -390,7 +390,7 @@
       <div class="section-label reveal">The Waste</div>
       <div class="stats-row">
         <div class="stat-card reveal d1">
-          <div class="big-number" style="color:var(--red)">~Â£400</div>
+          <div class="big-number" style="color:var(--red)">~£400</div>
           <div class="big-label">Cost for 1 pallet<br>over 250 miles</div>
         </div>
         <div class="stat-card reveal d2">
@@ -411,7 +411,7 @@
     <div class="slide-inner">
       <div class="section-label reveal">Definition</div>
       <div class="section-title reveal d1">What is a<br>Pallet Network?</div>
-      <div class="body-text reveal d2">A <span class="highlight">shared delivery system</span> for palletised freight. Independent hauliers share trailer space through a central hub-and-spoke network â so nobody sends a truck half-empty.</div>
+      <div class="body-text reveal d2">A <span class="highlight">shared delivery system</span> for palletised freight. Independent hauliers share trailer space through a central hub-and-spoke network — so nobody sends a truck half-empty.</div>
       <div class="stats-row reveal d3">
         <div class="stat-card">
           <div style="font-size:36px; margin-bottom:8px;">
@@ -499,13 +499,13 @@
         <div class="compare-card bad reveal d2">
           <div class="compare-title" style="color:var(--red);">Without Network</div>
           <div class="compare-row-item"><span class="compare-label">Truck utilisation</span><span class="compare-value highlight-red">~15%</span></div>
-          <div class="compare-row-item"><span class="compare-label">Cost per pallet</span><span class="compare-value highlight-red">Â£200âÂ£400</span></div>
+          <div class="compare-row-item"><span class="compare-label">Cost per pallet</span><span class="compare-value highlight-red">£200–£400</span></div>
           <div class="compare-row-item"><span class="compare-label">Geographic reach</span><span class="compare-value highlight-red">Local only</span></div>
         </div>
         <div class="compare-card good reveal d3">
           <div class="compare-title" style="color:var(--green);">With Network</div>
-          <div class="compare-row-item"><span class="compare-label">Truck utilisation</span><span class="compare-value highlight-green">85â95%</span></div>
-          <div class="compare-row-item"><span class="compare-label">Cost per pallet</span><span class="compare-value highlight-green">Â£20âÂ£60</span></div>
+          <div class="compare-row-item"><span class="compare-label">Truck utilisation</span><span class="compare-value highlight-green">85–95%</span></div>
+          <div class="compare-row-item"><span class="compare-label">Cost per pallet</span><span class="compare-value highlight-green">£20–£60</span></div>
           <div class="compare-row-item"><span class="compare-label">Geographic reach</span><span class="compare-value highlight-green">Nationwide</span></div>
         </div>
       </div>
@@ -601,7 +601,7 @@
         </div>
         <div class="network-card">
           <div class="network-name">TPN</div>
-          <div class="network-detail">The Pallet Network â known for competitive pricing and broad membership. Hub in Burton-upon-Trent.</div>
+          <div class="network-detail">The Pallet Network — known for competitive pricing and broad membership. Hub in Burton-upon-Trent.</div>
         </div>
         <div class="network-card">
           <div class="network-name">Palletforce</div>
@@ -629,7 +629,7 @@
     <div class="slide-inner">
       <div class="section-label reveal">Challenges</div>
       <div class="section-title reveal d1" style="font-size:38px; margin-bottom:12px;">Where It Gets Hard</div>
-      <div class="section-subtitle reveal d1" style="margin-bottom:24px; font-size:15px;">Pallet networks face real operational challenges â and this is exactly where technology like Qargo adds value.</div>
+      <div class="section-subtitle reveal d1" style="margin-bottom:24px; font-size:15px;">Pallet networks face real operational challenges — and this is exactly where technology like Qargo adds value.</div>
       <div class="stats-row">
         <div class="stat-card reveal d2" style="width:220px; text-align:left;">
           <div style="margin-bottom:8px;">
@@ -650,14 +650,14 @@
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="14" rx="2" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M10 22h8" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/><path d="M14 18v4" stroke="#00E85B" stroke-width="2"/></svg>
           </div>
           <div style="font-size:15px; font-weight:700; color:var(--white); margin-bottom:6px;">Legacy Systems</div>
-          <div style="font-size:12px; color:var(--dark-grey); line-height:1.5;">Many networks and members still rely on outdated software, manual processes, or phone/email-based booking â creating inefficiency and errors.</div>
+          <div style="font-size:12px; color:var(--dark-grey); line-height:1.5;">Many networks and members still rely on outdated software, manual processes, or phone/email-based booking — creating inefficiency and errors.</div>
         </div>
         <div class="stat-card reveal d5" style="width:220px; text-align:left;">
           <div style="margin-bottom:8px;">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 24L10 14 16 18 24 4" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 4h6v6" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div style="font-size:15px; font-weight:700; color:var(--white); margin-bottom:6px;">Scaling</div>
-          <div style="font-size:12px; color:var(--dark-grey); line-height:1.5;">As members grow, they need to handle more pallets, routes, customers, and data â without the headcount to match. Automation becomes essential.</div>
+          <div style="font-size:12px; color:var(--dark-grey); line-height:1.5;">As members grow, they need to handle more pallets, routes, customers, and data — without the headcount to match. Automation becomes essential.</div>
         </div>
       </div>
     </div>
@@ -668,7 +668,7 @@
     <div class="slide-inner">
       <div class="section-label reveal">Qargo's Role</div>
       <div class="section-title reveal d1" style="font-size:34px; margin-bottom:6px;">The Operating System for<br><span style="color:var(--green)">Pallet Network Members</span></div>
-      <div class="section-subtitle reveal d1" style="margin-bottom:18px; font-size:14px;">We help hauliers who are members of pallet networks run their operations more efficiently â from booking to delivery and everything in between.</div>
+      <div class="section-subtitle reveal d1" style="margin-bottom:18px; font-size:14px;">We help hauliers who are members of pallet networks run their operations more efficiently — from booking to delivery and everything in between.</div>
       <div class="cap-grid reveal d2">
         <div class="cap-card">
           <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M9 10h10M9 14h10M9 18h6" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/></svg></div>
@@ -688,7 +688,7 @@
         <div class="cap-card">
           <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="6" y="4" width="16" height="20" rx="2" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/><path d="M10 12l3 3 5-5" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="cap-name">Proof of Delivery</div>
-          <div class="cap-desc">Digital PODs with photos, signatures, and timestamps â eliminating paper and disputes.</div>
+          <div class="cap-desc">Digital PODs with photos, signatures, and timestamps — eliminating paper and disputes.</div>
         </div>
         <div class="cap-card">
           <div class="cap-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M8 14h12M14 8v12" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="10" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/></svg></div>
@@ -714,7 +714,7 @@
         <div class="glossary-item"><div class="glossary-term">Collection Leg</div><div class="glossary-def">The local route picking up pallets from shippers.</div></div>
         <div class="glossary-item"><div class="glossary-term">Delivery Leg</div><div class="glossary-def">The local route dropping off pallets to consignees.</div></div>
         <div class="glossary-item"><div class="glossary-term">Hub Sort</div><div class="glossary-def">The overnight process of sorting pallets by destination.</div></div>
-        <div class="glossary-item"><div class="glossary-term">POD</div><div class="glossary-def">Proof of Delivery â confirming a pallet reached its recipient.</div></div>
+        <div class="glossary-item"><div class="glossary-term">POD</div><div class="glossary-def">Proof of Delivery — confirming a pallet reached its recipient.</div></div>
         <div class="glossary-item"><div class="glossary-term">Member</div><div class="glossary-def">An independent haulier who has joined the pallet network.</div></div>
         <div class="glossary-item"><div class="glossary-term">Consignment</div><div class="glossary-def">A shipment of one or more pallets going to the same place.</div></div>
         <div class="glossary-item"><div class="glossary-term">Tail-lift</div><div class="glossary-def">A hydraulic lift on the truck for sites without a loading bay.</div></div>
@@ -733,7 +733,7 @@
       </div>
       <div class="hero-title reveal d1" style="font-size:48px;">Welcome to <span class="accent">Qargo</span></div>
       <div class="section-subtitle reveal d2" style="margin-bottom:12px;">You're going to do great things here.</div>
-      <div class="body-text reveal d2" style="margin-bottom:28px; font-size:14px; max-width:700px; margin-left:auto; margin-right:auto; line-height:1.6;">A pallet network is a shared, hub-and-spoke delivery system where independent hauliers collaborate to move palletised freight nationwide â efficiently, affordably, and at scale. Qargo helps these hauliers run their piece of the network better.</div>
+      <div class="body-text reveal d2" style="margin-bottom:28px; font-size:14px; max-width:700px; margin-left:auto; margin-right:auto; line-height:1.6;">A pallet network is a shared, hub-and-spoke delivery system where independent hauliers collaborate to move palletised freight nationwide — efficiently, affordably, and at scale. Qargo helps these hauliers run their piece of the network better.</div>
       <div class="stats-row reveal d3">
         <div class="stat-card">
           <div style="margin-bottom:6px;">
@@ -764,9 +764,9 @@
 
 <!-- Controls -->
 <div id="controls">
-  <button id="prev-btn" title="Previous">â</button>
-  <button id="play-btn" title="Play/Pause" class="active">â¸</button>
-  <button id="next-btn" title="Next">â¶</button>
+  <button id="prev-btn" title="Previous">◀</button>
+  <button id="play-btn" title="Play/Pause" class="active">⏸</button>
+  <button id="next-btn" title="Next">▶</button>
   <div id="slide-counter">1 / 14</div>
 </div>
 
@@ -793,7 +793,7 @@
       scheduleNext();
     } else {
       playing = false;
-      playBtn.textContent = 'â¶';
+      playBtn.textContent = '▶';
       playBtn.classList.remove('active');
       clearTimeout(timer);
     }
@@ -815,7 +815,7 @@
 
   function togglePlay() {
     playing = !playing;
-    playBtn.textContent = playing ? 'â¸' : 'â¶';
+    playBtn.textContent = playing ? '⏸' : '▶';
     playing ? playBtn.classList.add('active') : playBtn.classList.remove('active');
     if (playing) {
       if (current === slides.length - 1) showSlide(0);
