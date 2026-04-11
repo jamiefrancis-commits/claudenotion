@@ -719,6 +719,727 @@ document.addEventListener('keydown', function(e) {
 showSlide(0);
 </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storytelling from Features | Qargo Solution Engineering</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --green: #00E85B;
+    --green-secondary: #24D269;
+    --navy: #1C2C31;
+    --navy-90: #304045;
+    --navy-70: #606B6F;
+    --navy-10: #D4E1E5;
+    --mint: #EBFFF5;
+    --offwhite: #FEFEFE;
+    --light-grey: #EBF2EF;
+    --light-green: #F4FBF7;
+    --dark-grey: #BBC0C1;
+    --white: #ffffff;
+    --amber: #FCB220;
+    --red: #FF5E7A;
+    --blue: #4A9EFF;
+    --iso-green-1: #64F87D;
+    --iso-green-2: #36BB6B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* Progress bar */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green), var(--iso-green-1));
+    z-index: 1000; transition: width 0.6s ease;
+    box-shadow: 0 0 12px rgba(0,232,91,0.4);
+  }
+
+  /* Controls */
+  #controls {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px; z-index: 999;
+    background: rgba(28,44,49,0.9); backdrop-filter: blur(12px);
+    padding: 10px 24px; border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  #controls button {
+    background: none; border: none; color: var(--navy-70); cursor: pointer;
+    font-size: 18px; padding: 6px 10px; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  #controls button:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+  #controls button.active { color: var(--green); }
+  #slide-counter {
+    color: var(--dark-grey); font-size: 13px; font-weight: 500;
+    min-width: 60px; text-align: center;
+  }
+
+  /* Slide container and transitions */
+  #slideshow { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0.97);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    pointer-events: none; padding: 60px;
+  }
+  .slide.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .slide-inner { max-width: 960px; width: 100%; text-align: center; }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .slide.active .reveal { opacity: 1; transform: translateY(0); }
+  .slide.active .reveal.d1 { transition-delay: 0.3s; }
+  .slide.active .reveal.d2 { transition-delay: 0.6s; }
+  .slide.active .reveal.d3 { transition-delay: 0.9s; }
+  .slide.active .reveal.d4 { transition-delay: 1.2s; }
+  .slide.active .reveal.d5 { transition-delay: 1.5s; }
+
+  /* Background decoration */
+  .bg-glow {
+    position: fixed; border-radius: 50%; filter: blur(120px);
+    pointer-events: none; z-index: -1;
+  }
+  .bg-glow.g1 { width: 600px; height: 600px; background: rgba(0,232,91,0.05); top: -200px; right: -200px; }
+  .bg-glow.g2 { width: 500px; height: 500px; background: rgba(0,232,91,0.03); bottom: -150px; left: -150px; }
+  .bg-chevron {
+    position: fixed; bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    opacity: 0.03; z-index: -1; pointer-events: none;
+  }
+
+  /* Qargo logo */
+  #qargo-logo {
+    position: fixed;
+    top: 24px;
+    left: 32px;
+    z-index: 998;
+    opacity: 0.85;
+    transition: opacity 0.3s;
+  }
+  #qargo-logo:hover { opacity: 1; }
+  #qargo-logo svg {
+    width: 120px;
+    height: auto;
+  }
+
+  /* Typography */
+  .hero-title { font-size: 64px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .hero-title .accent { color: var(--green); }
+  .section-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--green); margin-bottom: 16px; }
+  .section-title { font-size: 48px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+  .section-subtitle { font-size: 22px; font-weight: 400; color: var(--dark-grey); max-width: 700px; margin: 0 auto; line-height: 1.6; }
+  .body-text { font-size: 20px; color: var(--dark-grey); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+  .big-number { font-size: 80px; font-weight: 800; color: var(--green); line-height: 1; }
+  .big-label { font-size: 18px; color: var(--navy-70); margin-top: 8px; font-weight: 500; }
+
+  /* Highlights */
+  .highlight, .highlight-green { color: var(--green); font-weight: 600; }
+  .highlight-amber { color: var(--amber); font-weight: 600; }
+  .highlight-red { color: var(--red); font-weight: 600; }
+  .highlight-blue { color: var(--blue); font-weight: 600; }
+
+  /* Stat cards */
+  .stats-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+  .stat-card {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
+    border-radius: 16px; padding: 32px 28px; min-width: 180px; flex: 1; max-width: 280px;
+  }
+
+  /* Step cards */
+  .steps-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .step-card {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
+    border-radius: 14px; padding: 24px 18px; flex: 1; min-width: 120px; max-width: 200px; text-align: center;
+  }
+  .step-num { font-size: 28px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+  .step-label { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--navy-70); line-height: 1.4; }
+
+  /* Compare cards */
+  .compare-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .compare-card {
+    border-radius: 16px; padding: 28px 24px; flex: 1; max-width: 440px; text-align: left;
+  }
+  .compare-card.good {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.12);
+  }
+  .compare-card.bad {
+    background: rgba(255,94,122,0.04); border: 1px solid rgba(255,94,122,0.12);
+  }
+  .compare-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+
+  /* Network grid */
+  .network-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  .network-card {
+    background: rgba(0,232,91,0.04); border: 1px solid rgba(0,232,91,0.10);
+    border-radius: 14px; padding: 22px 18px; text-align: left;
+  }
+  .network-name { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .network-detail { font-size: 13px; color: var(--white); font-weight: 400; line-height: 1.5; }
+
+  /* Glossary grid */
+  .glossary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 28px; }
+  .glossary-item {
+    background: rgba(0,232,91,0.03); border: 1px solid rgba(0,232,91,0.08);
+    border-radius: 12px; padding: 18px 16px; text-align: left;
+  }
+  .glossary-term { font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+  .glossary-def { font-size: 13px; color: var(--navy-10); line-height: 1.4; }
+
+  /* Two-column layout */
+  .two-col {
+    display: flex; gap: 32px; justify-content: center;
+    margin-top: 32px; flex-wrap: wrap;
+    max-width: 900px; margin-left: auto; margin-right: auto;
+  }
+  .col-card {
+    flex: 1; min-width: 280px; max-width: 420px;
+    background: rgba(0,232,91,0.04);
+    border: 1px solid rgba(0,232,91,0.15);
+    border-radius: 16px; padding: 32px 28px;
+  }
+  .col-card-title { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+  .col-card-body { font-size: 14px; color: var(--navy-10); line-height: 1.5; }
+
+  /* Badges and callouts */
+  .qargo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--green), var(--iso-green-2));
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy);
+  }
+  .callout-green {
+    background: rgba(0,232,91,0.08); border: 1px solid rgba(0,232,91,0.2);
+    border-radius: 12px; padding: 20px 24px; margin-top: 24px; text-align: left;
+    font-size: 17px; color: var(--mint); line-height: 1.5;
+  }
+
+  /* Cap grid */
+  .cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+  .cap-card {
+    background: rgba(0,232,91,0.05); border: 1px solid rgba(0,232,91,0.12);
+    border-radius: 14px; padding: 22px 14px; text-align: center;
+  }
+  .cap-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .cap-desc { font-size: 12px; color: var(--navy-70); line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<!-- Background decoration -->
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+<div class="bg-chevron">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 180L100 100L40 20" stroke="#00E85B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M100 180L160 100L100 20" stroke="#00E85B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<!-- Qargo Logo -->
+<div id="qargo-logo">
+  <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.56 175.56">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #00e85b;
+      }
+
+      .cls-2 {
+        fill: #fefefe;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <path class="cls-2" d="M277.25,120.7l-4.8-14.04h-25.12l-4.99,14.04h-12.28l24.47-65.84h11.27l24.28,65.84h-12.83ZM259.98,69.73h-.18l-9.05,26.41h18.19l-8.96-26.41h0Z"/>
+    <path class="cls-2" d="M332.76,120.7l-15.42-24.65h-10.62v24.65h-12.28V54.86h26.04c3.02,0,5.76.34,8.22,1.02s4.77,1.88,6.93,3.6c2.28,1.79,4.05,4.08,5.31,6.88,1.26,2.8,1.89,5.86,1.89,9.19,0,1.97-.26,3.92-.79,5.86-.52,1.94-1.32,3.76-2.4,5.45-1.08,1.69-2.43,3.22-4.06,4.57-1.63,1.36-3.56,2.43-5.77,3.23l16.34,26.04h-13.39ZM330.82,75.45c0-1.91-.31-3.52-.92-4.85-.62-1.32-1.46-2.38-2.54-3.19-1.08-.8-2.34-1.37-3.79-1.71s-3.03-.51-4.76-.51h-12.1v20.5h12.28c3.57,0,6.43-.85,8.59-2.54,2.15-1.69,3.23-4.26,3.23-7.71h.01Z"/>
+    <path class="cls-2" d="M397.92,109.71c-1.39,2.71-3.23,4.96-5.54,6.74-2.31,1.79-4.94,3.13-7.89,4.02s-6,1.34-9.14,1.34c-3.57,0-6.97-.49-10.2-1.48-3.23-.98-6.08-2.45-8.54-4.39-2.46-1.94-4.42-4.31-5.86-7.11-1.45-2.8-2.17-6.05-2.17-9.74v-21.05c0-3.88.69-7.32,2.08-10.34,1.39-3.02,3.28-5.56,5.68-7.62,2.4-2.06,5.19-3.63,8.36-4.71,3.17-1.08,6.57-1.62,10.2-1.62,3.14,0,6.22.4,9.23,1.19s5.69,2.03,8.03,3.71,4.23,3.82,5.68,6.43c1.45,2.61,2.17,5.76,2.17,9.45v2.03h-11.63v-.92c0-2.15-.42-3.94-1.25-5.36s-1.91-2.55-3.23-3.42c-1.32-.86-2.79-1.46-4.39-1.8-1.6-.34-3.14-.51-4.62-.51-1.6,0-3.23.22-4.89.65s-3.17,1.16-4.52,2.18c-1.36,1.02-2.48,2.35-3.37,3.99-.89,1.64-1.34,3.63-1.34,5.98v21.14c0,1.98.4,3.76,1.2,5.33.8,1.58,1.86,2.89,3.19,3.94,1.32,1.05,2.86,1.85,4.62,2.41s3.62.83,5.59.83c1.48,0,3-.22,4.57-.65s2.97-1.13,4.2-2.09c1.23-.96,2.25-2.2,3.05-3.72.8-1.52,1.2-3.36,1.2-5.53v-1.58h-16.99v-11.08h28.62v13.76c0,3.69-.69,6.9-2.08,9.6h-.02Z"/>
+    <path class="cls-2" d="M460.18,97.52c0,3.88-.75,7.33-2.26,10.34-1.51,3.02-3.51,5.56-6,7.62s-5.31,3.63-8.45,4.71-6.34,1.62-9.6,1.62c-3.57,0-6.97-.49-10.2-1.48-3.23-.98-6.08-2.45-8.54-4.39-2.46-1.94-4.42-4.31-5.86-7.11-1.45-2.8-2.17-6.05-2.17-9.74v-21.05c0-3.88.75-7.32,2.26-10.34s3.51-5.56,6-7.62c2.49-2.06,5.31-3.63,8.45-4.71s6.34-1.62,9.6-1.62c3.57,0,6.97.57,10.2,1.71s6.08,2.74,8.54,4.8c2.46,2.06,4.42,4.57,5.86,7.53,1.45,2.95,2.17,6.28,2.17,9.97,0,0,0,19.76,0,19.76ZM447.99,77.07c0-1.98-.4-3.74-1.2-5.28-.8-1.54-1.86-2.86-3.19-3.94-1.32-1.08-2.88-1.9-4.66-2.46-1.79-.56-3.63-.84-5.54-.84-1.6,0-3.23.22-4.89.65s-3.17,1.16-4.52,2.18c-1.36,1.02-2.48,2.35-3.37,3.99-.89,1.64-1.34,3.63-1.34,5.98v21.14c0,1.98.4,3.76,1.2,5.33.8,1.58,1.86,2.89,3.19,3.94,1.32,1.05,2.86,1.85,4.62,2.41,1.75.56,3.62.83,5.59.83,1.54,0,3.15-.22,4.85-.65,1.69-.43,3.22-1.16,4.57-2.18,1.35-1.02,2.48-2.35,3.37-3.99.89-1.64,1.34-3.63,1.34-5.98v-21.14h-.02Z"/>
+    <path class="cls-2" d="M227.22,67.79c-1.45-2.95-3.4-5.46-5.86-7.53-2.46-2.06-5.31-3.66-8.54-4.8s-6.63-1.71-10.2-1.71c-3.26,0-6.46.54-9.6,1.62s-5.96,2.65-8.45,4.71c-2.49,2.06-4.49,4.6-6,7.62-1.51,3.02-2.26,6.46-2.26,10.34v21.05c0,3.69.72,6.94,2.17,9.74s3.4,5.17,5.86,7.11,5.31,3.4,8.54,4.39c3.23.98,6.63,1.48,10.2,1.48,1.9,0,3.78-.19,5.64-.55l15.17,9.1v-10.53l-4.75-2.85c.68-.47,1.35-.96,1.99-1.49,2.49-2.06,4.49-4.6,6-7.62,1.51-3.02,2.26-6.46,2.26-10.34v-19.76c0-3.69-.72-7.02-2.17-9.97h0ZM203.07,111c-1.97,0-3.83-.28-5.59-.83-1.75-.56-3.29-1.36-4.62-2.41-1.32-1.05-2.39-2.36-3.19-3.94s-1.2-3.35-1.2-5.33v-21.14c0-2.35.45-4.34,1.34-5.98.89-1.64,2.02-2.97,3.37-3.99,1.35-1.02,2.86-1.75,4.52-2.18s3.29-.65,4.89-.65c1.91,0,3.75.28,5.54.84,1.78.56,3.34,1.38,4.66,2.46s2.38,2.39,3.19,3.94c.8,1.54,1.2,3.31,1.2,5.28v21.14c0,2.35-.45,4.34-1.34,5.98s-2.02,2.97-3.37,3.99c-1.35,1.02-2.88,1.75-4.57,2.18s-3.31.65-4.85.65h.02Z"/>
+    <polygon class="cls-1" points="38 64.98 73.15 43.89 108.31 64.98 144.88 43.04 73.15 0 1.42 43.04 38 64.98"/>
+    <polygon class="cls-1" points="71.69 130.8 36.58 109.73 36.58 67.54 0 45.6 0 131.67 71.69 174.69 71.69 130.8"/>
+    <polygon class="cls-1" points="74.62 174.69 109.73 153.62 146.3 175.56 146.3 131.67 109.73 109.73 74.62 130.8 74.62 174.69"/>
+    <polygon class="cls-1" points="146.3 45.6 109.73 67.54 109.73 109.73 146.3 87.78 146.3 45.6"/>
+    <g>
+      <path class="cls-2" d="M185.77,164.08c-1.9,0-3.55-.35-4.96-1.04-1.41-.69-2.49-1.65-3.26-2.89-.76-1.23-1.15-2.66-1.15-4.29h3.26c0,1.01.23,1.94.7,2.79.47.85,1.15,1.53,2.05,2.04.9.51,2.02.76,3.35.76,1.16,0,2.15-.19,2.98-.57.83-.38,1.46-.91,1.89-1.57.43-.67.65-1.42.65-2.26,0-1.01-.22-1.83-.65-2.46-.43-.63-1.02-1.14-1.76-1.54-.74-.39-1.6-.75-2.57-1.05-.97-.31-1.99-.65-3.05-1.02-2.05-.69-3.55-1.55-4.51-2.57-.96-1.02-1.44-2.36-1.44-4.01,0-1.41.33-2.64.98-3.7.65-1.06,1.59-1.89,2.81-2.5,1.22-.6,2.67-.91,4.35-.91s3.09.31,4.31.92c1.22.62,2.18,1.46,2.87,2.53.69,1.07,1.04,2.31,1.04,3.72h-3.26c0-.71-.19-1.42-.55-2.11-.37-.69-.93-1.26-1.68-1.72-.75-.46-1.7-.68-2.83-.68-.94-.02-1.77.13-2.5.46-.73.33-1.29.81-1.7,1.42-.41.62-.61,1.37-.61,2.26,0,.84.18,1.52.54,2.04.36.52.88.96,1.55,1.31.68.36,1.47.68,2.39.98.91.3,1.92.63,3.03,1,1.26.42,2.37.93,3.35,1.54.97.61,1.74,1.38,2.29,2.31.56.94.83,2.13.83,3.59,0,1.23-.33,2.4-.98,3.5-.65,1.1-1.62,1.99-2.9,2.68-1.28.69-2.9,1.04-4.85,1.04Z"/>
+      <path class="cls-2" d="M198.05,163.64v-18.65h2.81l.19,2.66c.59-.96,1.39-1.72,2.39-2.28,1-.55,2.09-.83,3.27-.83.96,0,1.83.13,2.61.39.78.26,1.47.65,2.07,1.18.6.53,1.08,1.2,1.42,2.02.64-1.13,1.53-2.02,2.66-2.65,1.13-.63,2.33-.94,3.59-.94,1.46,0,2.71.29,3.77.87,1.06.58,1.89,1.46,2.48,2.63.59,1.17.89,2.66.89,4.46v11.14h-3.07v-10.8c0-1.88-.38-3.28-1.15-4.22-.76-.94-1.85-1.41-3.26-1.41-.96,0-1.83.25-2.59.76-.77.51-1.37,1.24-1.81,2.2-.44.96-.67,2.15-.67,3.55v9.92h-3.11v-10.8c0-1.88-.38-3.28-1.15-4.22-.77-.94-1.84-1.41-3.22-1.41-.94,0-1.79.25-2.55.76-.76.51-1.37,1.24-1.81,2.2-.44.96-.67,2.15-.67,3.55v9.92h-3.11Z"/>
+      <path class="cls-2" d="M236.35,164.08c-1.5,0-2.76-.27-3.77-.8s-1.76-1.23-2.26-2.11c-.49-.88-.74-1.83-.74-2.87,0-1.26.33-2.32.98-3.2.65-.88,1.58-1.54,2.78-2,1.2-.46,2.61-.68,4.24-.68h4.92c0-1.16-.18-2.13-.54-2.9-.36-.78-.88-1.36-1.55-1.76-.68-.39-1.52-.59-2.54-.59-1.18,0-2.21.3-3.07.89s-1.39,1.47-1.59,2.63h-3.18c.15-1.33.6-2.45,1.35-3.35.75-.9,1.71-1.59,2.87-2.07,1.16-.48,2.37-.72,3.63-.72,1.73,0,3.16.31,4.31.94,1.15.63,2,1.5,2.57,2.63.57,1.12.85,2.45.85,3.98v11.54h-2.78l-.18-3.29c-.25.52-.56,1-.94,1.46-.38.46-.83.85-1.33,1.18-.51.33-1.09.6-1.76.8-.67.2-1.42.3-2.26.3ZM236.83,161.45c.86,0,1.65-.18,2.35-.54.7-.36,1.3-.85,1.79-1.48.49-.63.87-1.33,1.13-2.09.26-.76.39-1.57.39-2.41v-.11h-4.66c-1.21,0-2.18.14-2.92.42-.74.28-1.27.68-1.59,1.18-.32.51-.48,1.04-.48,1.72s.15,1.25.46,1.74c.31.49.76.88,1.37,1.15s1.33.41,2.16.41Z"/>
+      <path class="cls-2" d="M249.67,163.64v-18.65h2.81l.22,3.55c.42-.84.96-1.55,1.61-2.15s1.44-1.05,2.37-1.37c.92-.32,1.98-.48,3.16-.48v3.26h-1.15c-.79,0-1.54.11-2.26.31-.72.21-1.35.55-1.91,1.02-.55.47-.99,1.1-1.29,1.91-.31.8-.46,1.79-.46,2.98v9.62h-3.11Z"/>
+      <path class="cls-2" d="M269.94,163.64c-1.11,0-2.07-.17-2.89-.52-.81-.35-1.44-.93-1.87-1.76s-.65-1.94-.65-3.35v-10.4h-3.26v-2.63h3.26l.41-4.51h2.7v4.51h5.4v2.63h-5.4v10.4c0,1.16.23,1.94.7,2.35.47.41,1.29.61,2.48.61h2v2.66h-2.89Z"/>
+      <path class="cls-2" d="M284.04,164.08c-1.73,0-3.27-.41-4.62-1.22-1.36-.81-2.42-1.95-3.18-3.42s-1.15-3.18-1.15-5.12.38-3.69,1.13-5.14c.75-1.46,1.81-2.59,3.18-3.4,1.37-.81,2.94-1.22,4.72-1.22s3.38.41,4.66,1.22c1.28.81,2.26,1.88,2.94,3.2.68,1.32,1.02,2.77,1.02,4.35v.78c0,.27-.01.58-.04.92h-15.28v-2.41h12.25c-.07-1.7-.63-3.03-1.68-4-1.05-.96-2.36-1.44-3.94-1.44-1.04,0-2.01.24-2.92.72-.91.48-1.64,1.18-2.18,2.11-.54.92-.81,2.08-.81,3.46v1.04c0,1.53.28,2.81.83,3.85.55,1.04,1.28,1.81,2.18,2.33s1.87.78,2.9.78c1.31,0,2.39-.29,3.24-.87.85-.58,1.47-1.38,1.87-2.39h3.07c-.32,1.14-.85,2.14-1.59,3.02-.74.88-1.66,1.57-2.76,2.09-1.1.52-2.38.78-3.83.78Z"/>
+      <path class="cls-2" d="M296.14,163.64v-18.65h2.81l.22,3.55c.42-.84.96-1.55,1.61-2.15s1.44-1.05,2.37-1.37c.92-.32,1.98-.48,3.16-.48v3.26h-1.15c-.79,0-1.54.11-2.26.31-.72.21-1.35.55-1.91,1.02-.55.47-.99,1.1-1.29,1.91-.31.8-.46,1.79-.46,2.98v9.62h-3.11Z"/>
+      <path class="cls-2" d="M325.51,163.64c-1.11,0-2.07-.17-2.89-.52-.81-.35-1.44-.93-1.87-1.76s-.65-1.94-.65-3.35v-10.4h-3.26v-2.63h3.26l.41-4.51h2.7v4.51h5.4v2.63h-5.4v10.4c0,1.16.23,1.94.7,2.35.47.41,1.29.61,2.48.61h2v2.66h-2.89Z"/>
+      <path class="cls-2" d="M331.95,163.64v-26.64h3.11v11.14c.62-1.11,1.49-1.99,2.61-2.63,1.12-.64,2.35-.96,3.68-.96,1.43,0,2.68.29,3.74.87,1.06.58,1.88,1.46,2.44,2.65.57,1.18.85,2.68.85,4.44v11.1h-3.07v-10.77c0-1.88-.4-3.29-1.18-4.24-.79-.95-1.94-1.42-3.44-1.42-1.06,0-2.02.26-2.87.78-.85.52-1.52,1.26-2.02,2.22-.49.96-.74,2.15-.74,3.55v9.88h-3.11Z"/>
+      <path class="cls-2" d="M358.55,164.08c-1.5,0-2.76-.27-3.77-.8s-1.76-1.23-2.26-2.11c-.49-.88-.74-1.83-.74-2.87,0-1.26.33-2.32.98-3.2.65-.88,1.58-1.54,2.78-2,1.2-.46,2.61-.68,4.24-.68h4.92c0-1.16-.18-2.13-.54-2.9-.36-.78-.88-1.36-1.55-1.76-.68-.39-1.52-.59-2.54-.59-1.18,0-2.21.3-3.07.89s-1.39,1.47-1.59,2.63h-3.18c.15-1.33.6-2.45,1.35-3.35.75-.9,1.71-1.59,2.87-2.07,1.16-.48,2.37-.72,3.63-.72,1.73,0,3.16.31,4.31.94,1.15.63,2,1.5,2.57,2.63.57,1.12.85,2.45.85,3.98v11.54h-2.78l-.18-3.29c-.25.52-.56,1-.94,1.46-.38.46-.83.85-1.33,1.18-.51.33-1.09.6-1.76.8-.67.2-1.42.3-2.26.3ZM359.03,161.45c.86,0,1.65-.18,2.35-.54.7-.36,1.3-.85,1.79-1.48.49-.63.87-1.33,1.13-2.09.26-.76.39-1.57.39-2.41v-.11h-4.66c-1.21,0-2.18.14-2.92.42-.74.28-1.27.68-1.59,1.18-.32.51-.48,1.04-.48,1.72s.15,1.25.46,1.74c.31.49.76.88,1.37,1.15s1.33.41,2.16.41Z"/>
+      <path class="cls-2" d="M371.87,163.64v-18.65h2.81l.15,3.26c.59-1.16,1.44-2.07,2.54-2.72,1.1-.65,2.35-.98,3.75-.98s2.71.29,3.77.87c1.06.58,1.89,1.46,2.48,2.63.59,1.17.89,2.66.89,4.46v11.14h-3.11v-10.8c0-1.88-.41-3.28-1.24-4.22-.83-.94-1.99-1.41-3.5-1.41-1.04,0-1.96.25-2.77.76-.81.51-1.46,1.23-1.94,2.18-.48.95-.72,2.13-.72,3.53v9.95h-3.11Z"/>
+      <path class="cls-2" d="M407.54,164.08c-1.5,0-2.76-.27-3.77-.8s-1.76-1.23-2.26-2.11c-.49-.88-.74-1.83-.74-2.87,0-1.26.33-2.32.98-3.2.65-.88,1.58-1.54,2.78-2,1.2-.46,2.61-.68,4.24-.68h4.92c0-1.16-.18-2.13-.54-2.9-.36-.78-.88-1.36-1.55-1.76-.68-.39-1.52-.59-2.54-.59-1.18,0-2.21.3-3.07.89s-1.39,1.47-1.59,2.63h-3.18c.15-1.33.6-2.45,1.35-3.35.75-.9,1.71-1.59,2.87-2.07,1.16-.48,2.37-.72,3.63-.72,1.73,0,3.16.31,4.31.94,1.15.63,2,1.5,2.57,2.63.57,1.12.85,2.45.85,3.98v11.54h-2.78l-.18-3.29c-.25.52-.56,1-.94,1.46-.38.46-.83.85-1.33,1.18-.51.33-1.09.6-1.76.8-.67.2-1.42.3-2.26.3ZM408.02,161.45c.86,0,1.65-.18,2.35-.54.7-.36,1.3-.85,1.79-1.48.49-.63.87-1.33,1.13-2.09.26-.76.39-1.57.39-2.41v-.11h-4.66c-1.21,0-2.18.14-2.92.42-.74.28-1.27.68-1.59,1.18-.32.51-.48,1.08-.48,1.72s.15,1.25.46,1.74c.31.49.76.88,1.37,1.15s1.33.41,2.16.41Z"/>
+      <path class="cls-2" d="M436.22,163.64v-23.35h-7.73v-2.55h18.57v2.55h-7.73v23.35h-3.11Z"/>
+      <path class="cls-2" d="M450.17,163.64v-25.9h3.63l9.18,18.09,9.14-18.09h3.66v25.9h-3.11v-20.35l-8.55,16.72h-2.33l-8.51-16.65v20.28h-3.11Z"/>
+      <path class="cls-2" d="M488.83,164.08c-1.9,0-3.55-.35-4.96-1.04-1.41-.69-2.49-1.65-3.26-2.89s-1.15-2.66-1.15-4.29h3.26c0,1.01.23,1.94.7,2.79.47.85,1.15,1.53,2.05,2.04.9.51,2.02.76,3.35.76,1.16,0,2.15-.19,2.98-.57.83-.38,1.46-.91,1.89-1.57s.65-1.42.65-2.26c0-1.01-.22-1.83-.65-2.46s-1.02-1.14-1.76-1.54-1.6-.75-2.57-1.05c-.97-.31-1.99-.65-3.05-1.02-2.05-.69-3.55-1.55-4.51-2.57-.96-1.02-1.44-2.36-1.44-4.01,0-1.41.33-2.64.98-3.7.65-1.06,1.59-1.89,2.81-2.5,1.22-.6,2.67-.91,4.35-.91s3.09.31,4.31.92c1.22.62,2.18,1.46,2.87,2.53.69,1.07,1.04,2.31,1.04,3.72h-3.26c0-.71-.19-1.42-.56-2.11-.37-.69-.93-1.26-1.68-1.72-.75-.46-1.7-.68-2.83-.68-.94-.02-1.77.13-2.5.46-.73.33-1.3.81-1.7,1.42-.41.62-.61,1.37-.61,2.26,0,.84.18,1.52.54,2.04.36.52.88.96,1.55,1.31s1.47.68,2.39.98c.91.3,1.92.63,3.03,1,1.26.42,2.37.93,3.35,1.54.97.61,1.74,1.38,2.29,2.31.55.94.83,2.13.83,3.59,0,1.23-.33,2.4-.98,3.5s-1.62,1.99-2.9,2.68c-1.28.69-2.9,1.04-4.85,1.04Z"/>
+    </g>
+  </g>
+</svg>
+</div>
+
+<!-- Progress bar -->
+<div id="progress-bar" style="width: 0%"></div>
+
+<!-- Slides -->
+<div id="slideshow">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide active" data-duration="5000">
+    <div class="slide-inner">
+      <div class="reveal" style="margin-bottom: 20px;">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 12C8 12 14 8 32 8C50 8 56 12 56 12V52C56 52 50 48 32 48C14 48 8 52 8 52V12Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)" stroke-linejoin="round"/>
+          <path d="M32 8V48" stroke="#00E85B" stroke-width="2"/>
+          <path d="M16 18H26" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 24H24" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 30H22" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <path d="M38 18H48" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <path d="M40 24H48" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <path d="M42 30H48" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="hero-title reveal d1">Storytelling from<br><span class="accent">Features</span></div>
+      <div class="section-subtitle reveal d2">Stop listing features. Start creating moments your prospects remember.</div>
+      <div class="reveal d3" style="margin-top: 36px;">
+        <span class="qargo-badge">Qargo Academy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Overview -->
+  <div class="slide" data-duration="6000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Solution Engineering Playbook</div>
+      <div class="section-title reveal d1">Your <span class="highlight">3-Step</span> Journey</div>
+      <div class="steps-grid reveal d2">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-label">Learn the Framework</div>
+          <div class="step-desc">Master the 3-step story structure: Before, Shift, After.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-label">See It in Action</div>
+          <div class="step-desc">Compare feature dumps vs. stories side-by-side.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-label">Use the Cheatsheet</div>
+          <div class="step-desc">Grab ready-made story scaffolds for your next demo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Framework Intro -->
+  <div class="slide" data-duration="6000">
+    <div class="slide-inner">
+      <div class="section-label reveal">The Framework</div>
+      <div class="section-title reveal d1">The <span class="highlight">3-Step</span> Story Framework</div>
+      <div class="body-text reveal d2">Every feature you demo has a story hiding inside it. Here's how to find it and tell it in a way that makes prospects lean in.</div>
+      <div class="stats-row reveal d3">
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 16C2 16 7 8 16 8C25 8 30 16 30 16C30 16 25 24 16 24C7 24 2 16 2 16Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.15)"/>
+          </svg>
+          <div class="big-number" style="font-size:48px;">1</div>
+          <div class="big-label">The Setup</div>
+        </div>
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 4L8 18H15L14 28L24 14H17L18 4Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)" stroke-linejoin="round"/>
+          </svg>
+          <div class="big-number" style="font-size:48px;">2</div>
+          <div class="big-label">The Shift</div>
+        </div>
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4L19.5 12.5L28 13L21.5 19L23.5 28L16 23.5L8.5 28L10.5 19L4 13L12.5 12.5L16 4Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)" stroke-linejoin="round"/>
+          </svg>
+          <div class="big-number" style="font-size:48px;">3</div>
+          <div class="big-label">The Payoff</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Step 1 - The Setup -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Step 1 &mdash; The Setup</div>
+      <div class="section-title reveal d1">Paint the <span class="highlight">&ldquo;Before&rdquo;</span> World</div>
+      <div class="body-text reveal d2">Describe the painful reality your prospect lives in right now. Use specifics they recognise: the spreadsheet chaos, the 3am phone calls, the revenue leaking through the cracks.</div>
+      <div class="callout-green reveal d3">
+        <span style="color:var(--green);font-weight:700;">Example:</span> &ldquo;Picture this: it's Monday morning and your planner has 40 orders to schedule. They're juggling three spreadsheets, calling drivers on WhatsApp, and manually checking which trailer is at which depot. By 10am they've already made two mistakes that will cost real money.&rdquo;
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Step 2 - The Shift -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Step 2 &mdash; The Shift</div>
+      <div class="section-title reveal d1">Introduce the <span class="highlight">Change</span></div>
+      <div class="body-text reveal d2">This is where Qargo enters the story &mdash; not as a product pitch, but as the turning point. Show the moment everything changes. Keep it brief, specific, and visual.</div>
+      <div class="callout-green reveal d3">
+        <span style="color:var(--green);font-weight:700;">Example:</span> &ldquo;Now, that same planner opens Qargo. Every order is already there, auto-imported from their customers' systems. The optimiser has grouped loads by route and matched them to available drivers. Instead of building the puzzle from scratch, they're reviewing a plan that's already 90% done.&rdquo;
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Step 3 - The Payoff -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Step 3 &mdash; The Payoff</div>
+      <div class="section-title reveal d1">Reveal the <span class="highlight">&ldquo;After&rdquo;</span> World</div>
+      <div class="body-text reveal d2">Paint the outcome &mdash; not in feature language, but in the customer's language. Think: time saved, stress reduced, revenue gained, errors eliminated.</div>
+      <div class="callout-green reveal d3">
+        <span style="color:var(--green);font-weight:700;">Example:</span> &ldquo;By 9:15, planning is done. The planner spends the rest of their morning handling exceptions instead of building plans. They go home on time. Drivers know their schedules before they've finished breakfast. And finance can see exactly what every load is costing in real time.&rdquo;
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Feature Dumping vs Storytelling -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Comparison</div>
+      <div class="section-title reveal d1">Feature Dumping vs. <span class="highlight">Storytelling</span></div>
+      <div class="compare-row">
+        <div class="compare-card bad reveal d2">
+          <div class="compare-title" style="color:var(--red);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF5E7A" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:8px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Feature Dump
+          </div>
+          <p style="font-size:15px;color:var(--navy-10);line-height:1.7;">&ldquo;Qargo has automated planning, real-time visibility, driver app integration, CMR generation, subcontractor management, and API connections.&rdquo;</p>
+        </div>
+        <div class="compare-card good reveal d3">
+          <div class="compare-title" style="color:var(--green);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E85B" stroke-width="2.5" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:8px;"><polyline points="20 6 9 17 4 12"/></svg>
+            Story
+          </div>
+          <p style="font-size:15px;color:var(--navy-10);line-height:1.7;">&ldquo;One of our customers used to spend two hours every morning just building their plan. Three weeks after going live with Qargo, planning takes 15 minutes.&rdquo;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Story Starters Intro -->
+  <div class="slide" data-duration="5000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Cheatsheet</div>
+      <div class="section-title reveal d1">Story <span class="highlight">Starters</span> by Feature</div>
+      <div class="section-subtitle reveal d2">Ready-to-use Before &rarr; Shift &rarr; After scaffolds you can adapt for your next call.</div>
+      <div class="reveal d3" style="margin-top:32px;">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="8" width="40" height="48" rx="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+          <line x1="20" y1="20" x2="44" y2="20" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="28" x2="44" y2="28" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="36" x2="36" y2="36" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="44" x2="40" y2="44" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Automated Planning -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Story Starter</div>
+      <div class="section-title reveal d1" style="font-size:36px;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:inline;vertical-align:middle;margin-right:10px;">
+          <rect x="4" y="4" width="20" height="20" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+          <line x1="9" y1="10" x2="19" y2="10" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="9" y1="14" x2="19" y2="14" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="9" y1="18" x2="15" y2="18" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Automated Planning &amp; Optimisation
+      </div>
+      <div class="network-grid reveal d2">
+        <div class="network-card">
+          <div class="network-name" style="color:var(--red);">Before</div>
+          <div class="network-detail">Planners spending 2+ hours manually assigning orders. Constant re-planning as drivers call in sick or loads change. Revenue lost to empty kilometres.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--amber);">Shift</div>
+          <div class="network-detail">Qargo's optimiser builds the plan in minutes, factoring in vehicle type, driver hours, location, and delivery windows automatically.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--green);">After</div>
+          <div class="network-detail">Planning in 15 minutes. 12% fewer empty kilometres. Planners now focus on exceptions and customer relationships instead of puzzle-solving.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Driver App -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Story Starter</div>
+      <div class="section-title reveal d1" style="font-size:36px;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:inline;vertical-align:middle;margin-right:10px;">
+          <rect x="8" y="2" width="12" height="24" rx="3" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+          <line x1="12" y1="22" x2="16" y2="22" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Driver App &amp; Real-time Visibility
+      </div>
+      <div class="network-grid reveal d2">
+        <div class="network-card">
+          <div class="network-name" style="color:var(--red);">Before</div>
+          <div class="network-detail">Operations managers fielding dozens of &ldquo;where's my truck?&rdquo; calls daily. Drivers using WhatsApp for PODs. No audit trail. Customers frustrated.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--amber);">Shift</div>
+          <div class="network-detail">Every driver has real-time updates on their phone. PODs are captured digitally and attached to the order instantly. Customers get live tracking links.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--green);">After</div>
+          <div class="network-detail">80% fewer status calls. PODs available within minutes of delivery. Customer satisfaction scores up. Operations team reclaims hours every week.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Documentation -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Story Starter</div>
+      <div class="section-title reveal d1" style="font-size:36px;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:inline;vertical-align:middle;margin-right:10px;">
+          <path d="M7 4H17L21 8V24H7V4Z" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)" stroke-linejoin="round"/>
+          <path d="M17 4V8H21" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="11" y1="13" x2="18" y2="13" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11" y1="17" x2="18" y2="17" stroke="#00E85B" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Automated Documentation (CMR/ePOD)
+      </div>
+      <div class="network-grid reveal d2">
+        <div class="network-card">
+          <div class="network-name" style="color:var(--red);">Before</div>
+          <div class="network-detail">Admin teams buried in paper CMRs. Missing documents delaying invoicing by days. Disputes unresolvable because nobody can find the original paperwork.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--amber);">Shift</div>
+          <div class="network-detail">Qargo generates CMRs automatically and captures electronic proof of delivery. Everything is linked, searchable, and archived in one place.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--green);">After</div>
+          <div class="network-detail">Invoicing within 24 hours of delivery. Disputes resolved in minutes with full digital audit trail. Admin team freed up to focus on growth.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Integrations -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Story Starter</div>
+      <div class="section-title reveal d1" style="font-size:36px;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:inline;vertical-align:middle;margin-right:10px;">
+          <circle cx="8" cy="14" r="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+          <circle cx="20" cy="14" r="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+          <line x1="12" y1="14" x2="16" y2="14" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Integrations &amp; API
+      </div>
+      <div class="network-grid reveal d2">
+        <div class="network-card">
+          <div class="network-name" style="color:var(--red);">Before</div>
+          <div class="network-detail">Orders arriving by email, phone, and portal. Someone manually re-keying every order into the TMS. Errors creeping in. Customers sending the same info twice.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--amber);">Shift</div>
+          <div class="network-detail">Qargo connects directly to customer systems, ERPs, and partner platforms. Orders flow in automatically with zero manual entry.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--green);">After</div>
+          <div class="network-detail">Zero re-keying errors. Orders appear in Qargo the moment they're created. Everyone works from one source of truth.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Subcontractor Management -->
+  <div class="slide" data-duration="8000">
+    <div class="slide-inner">
+      <div class="section-label reveal">Story Starter</div>
+      <div class="section-title reveal d1" style="font-size:36px;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:inline;vertical-align:middle;margin-right:10px;">
+          <circle cx="14" cy="8" r="4" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+          <path d="M6 24C6 20 9.5 17 14 17C18.5 17 22 20 22 24" stroke="#00E85B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Subcontractor Management
+      </div>
+      <div class="network-grid reveal d2">
+        <div class="network-card">
+          <div class="network-name" style="color:var(--red);">Before</div>
+          <div class="network-detail">Subcontractor rates tracked in spreadsheets. No visibility on whether outsourced loads are profitable. Disputes about agreed prices. Chaotic self-billing.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--amber);">Shift</div>
+          <div class="network-detail">Qargo stores rate cards, auto-calculates costs, and gives real-time margin visibility on every subcontracted load. Digital acceptance and self-billing built in.</div>
+        </div>
+        <div class="network-card">
+          <div class="network-name" style="color:var(--green);">After</div>
+          <div class="network-detail">Full margin visibility per load, per sub. Rate disputes eliminated. Self-billing automated. Finance knows exactly what's owed before the month is closed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: Closing -->
+  <div class="slide" data-duration="6000">
+    <div class="slide-inner">
+      <div class="section-label reveal">The Golden Rule</div>
+      <div class="section-title reveal d1">Features <span class="highlight-red">Tell</span>. Stories <span class="highlight">Sell</span>.</div>
+      <div class="body-text reveal d2" style="margin-top: 24px; margin-bottom: 32px;">Every time you demo a feature, wrap it in a <span class="highlight">Before</span> &rarr; <span class="highlight-amber">Shift</span> &rarr; <span class="highlight">After</span> story and watch your prospects lean in.</div>
+      <div class="stats-row reveal d3">
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+            <circle cx="16" cy="16" r="12" stroke="#FF5E7A" stroke-width="2" fill="rgba(255,94,122,0.1)"/>
+            <path d="M11 16H21" stroke="#FF5E7A" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="big-number" style="font-size:36px;color:var(--red);">Before</div>
+          <div class="big-label">The painful reality</div>
+        </div>
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+            <path d="M8 16H24" stroke="#FCB220" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18 10L24 16L18 22" stroke="#FCB220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="big-number" style="font-size:36px;color:var(--amber);">Shift</div>
+          <div class="big-label">Qargo enters the story</div>
+        </div>
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin: 0 auto 12px; display: block;">
+            <circle cx="16" cy="16" r="12" stroke="#00E85B" stroke-width="2" fill="rgba(0,232,91,0.1)"/>
+            <path d="M12 16L15 19L21 13" stroke="#00E85B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="big-number" style="font-size:36px;color:var(--green);">After</div>
+          <div class="big-label">The better world</div>
+        </div>
+      </div>
+      <div class="reveal d5" style="margin-top: 32px;">
+        <span class="qargo-badge">Qargo Academy</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation controls -->
+<div id="controls">
+  <button id="prev-btn" title="Previous">&#9664;</button>
+  <button id="play-btn" title="Play/Pause">&#9654;</button>
+  <button id="next-btn" title="Next">&#9654;</button>
+  <div id="slide-counter">1 / 14</div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progress-bar');
+const counter = document.getElementById('slide-counter');
+const playBtn = document.getElementById('play-btn');
+let current = 0;
+let playing = false;
+let timer = null;
+
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[index].classList.add('active');
+  progressBar.style.width = ((index + 1) / slides.length * 100) + '%';
+  counter.textContent = (index + 1) + ' / ' + slides.length;
+  current = index;
+}
+
+function goNext() {
+  if (current < slides.length - 1) {
+    showSlide(current + 1);
+  }
+}
+
+function goPrev() {
+  if (current > 0) {
+    showSlide(current - 1);
+  }
+}
+
+function autoNext() {
+  if (current < slides.length - 1) {
+    showSlide(current + 1);
+    scheduleNext();
+  } else {
+    stopPlay();
+  }
+}
+
+function scheduleNext() {
+  clearTimeout(timer);
+  if (!playing) return;
+  var d = parseInt(slides[current].dataset.duration) || 5000;
+  timer = setTimeout(autoNext, d);
+}
+
+function stopPlay() {
+  playing = false;
+  clearTimeout(timer);
+  playBtn.textContent = '\u25B6';
+  playBtn.classList.remove('active');
+}
+
+function startPlay() {
+  playing = true;
+  playBtn.textContent = '\u23F8';
+  playBtn.classList.add('active');
+  scheduleNext();
+}
+
+function togglePlay() {
+  playing ? stopPlay() : startPlay();
+}
+
+document.getElementById('next-btn').addEventListener('click', function() {
+  stopPlay();
+  goNext();
+});
+document.getElementById('prev-btn').addEventListener('click', function() {
+  stopPlay();
+  goPrev();
+});
+playBtn.addEventListener('click', togglePlay);
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); stopPlay(); goNext(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); stopPlay(); goPrev(); }
+  if (e.key === 'p') togglePlay();
+});
+
+showSlide(0);
+</script>
+</body>
 </html>
 <!DOCTYPE html>
 <html lang="en">
